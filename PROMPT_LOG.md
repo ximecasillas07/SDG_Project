@@ -1,4 +1,4 @@
-#AI Prompt log
+# AI Prompt log
 
 ---
 

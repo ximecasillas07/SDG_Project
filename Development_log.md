@@ -1,6 +1,6 @@
 # Development Log SDG Project
-**Members:** Ximena Casillas, Valeria Arias, Alejandra Eguiarte 
-The following logs are taken in our project group chat then added to the log. 
+**Members:** Ximena Casillas, Valeria Arias, Alejandra Eguiarte.
+* The following logs are taken in our project group chat then added to the log. 
 
 ---
 

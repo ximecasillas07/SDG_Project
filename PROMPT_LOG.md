@@ -397,7 +397,7 @@ Changed a few class="" specifications, commented everything differently, changed
 ### JS code prompt 
 Write a JavaScript file called script.js for my HTML BMI calculator that waits for DOMContentLoaded, handles the #bmi-form submit event by preventing default reload, parses weight from #weight and height from #height, makes sure inputs are valid inputs (positive) add an alert if not, automatically converts height from centimeters to meters if the value exceeds 10, validates that the height in meters falls between 0.5 and 3.0, show an alert if invalid, calculates BMI using known formula, classifies the score into Underweight if <18.5, Normal weight if <25, Overweight if <30, or Obesity >=30, and uses a function showMessage to show the result of the operation. This is the html code called index.html: (we copy pasted the previous modified html code)
 
-### AI respone
+### AI response
 I'd be glad to help! Here is the JavaScript code (script.js) for your BMI calculator based on your specifications, integrated with your HTML elements and Bootstrap styling:
 
 ```html

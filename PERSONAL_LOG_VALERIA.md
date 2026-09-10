@@ -1,5 +1,5 @@
 # Personal Log & Peer Assessment
-**Member:** Valeria Arias.
+**Member:** Valeria Arias
 **Project:** SDG 3 Mexico Health Portal
 
 ---

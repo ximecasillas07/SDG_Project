@@ -1,6 +1,20 @@
 # AI Prompt log
+**Mexico Health Portal**
 
 ---
+
+## Project Proposal Prompts (10/09) 
+
+### Goal and Content
+The following prompts will be used to make sure our code works and is valid, as well as debugging any errors we may find while developing the project. 
+
+The following is the list of requirements the prototype must meet given by our professor: 
+- Adaptable website in HTML5 suitable for wide and mobile view at least.
+- It should use the bootstrap grid system.
+- Reusable elements should be in place.
+- Design based on topics described in class.
+- Consistent color palette.
+- File organization using external styles (although if required limited internals can be used).
 
 ### HTML code prompt 
 The following is code is the index.html code I am making for my website about health in Mexico, the proyect is based on the UN sustainable development goal number 3. I used this link for the bootstrap templates, https://getbootstrap.com/, can you tell me if the sections are correctly arranged or if I have an error? 
@@ -390,7 +404,215 @@ Your HTML structure and Bootstrap setup are mostly solid, but there are a few st
 ```
 
 ### Our modifications
-Changed a few class="" specifications, commented everything differently, changed a few titles, names, and descriptions, removed the "Home/Hero section" the AI gave us as we didn't want it. 
+We kept the overall grid and cards, only changing some details about the setup. We properly linked the style.css and script.js files. We removed the "Home/Hero section" the AI gave us to keep the prototype in its intented scope, we opened a live server to confirm it had the look we wanted. After everything was checked, we commented it. 
+
+We plan for our prototype to be the base of the project, and all the other changes to the design (both visual and functional changes) to be held off until we get feedback on the prototype submission. 
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title> Mexico Health Portal </title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+        />
+        <link rel="stylesheet" href="css/styles.css" />
+    </head>
+
+    <body>
+        <!-- Navbar: navigation bar-->
+         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <!-- container center content and add horizontal padding-->
+             <div class="container">
+                <!-- site name on the left-->
+                <a class="navbar-brand" href="#">Mexico Health</a>
+                <!-- button for collapsing navbar-->
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navMenu"
+                    aria-controls="navMenu"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                <!-- icon inside the toggler button-->
+                 <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- collapsible items -->
+                 <div class="collapse navbar-collapse" id="navMenu">
+                    <!-- pushes the list to the right-->
+                     <ul class="navbar-nav ms-auto">
+                        <!--each item links to a section id on the page-->
+                        <li class="nav-item">
+                            <a class="nav-link" href="#home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#mexico">Mexico</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#resources">Resources</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#calculator">Calculator</a>
+                        </li>
+                     </ul>
+                 </div>
+             </div>
+         </nav>
+
+    <!-- main content-->
+     <main class="py-5">
+        <div class="container">
+            <!-- Mexico section introduction -->
+            <section id="mexico" class="mb-5">
+                <!-- mb-5 bottom margin -->
+                <div class="row">
+                    <div class="col-md-8">
+                        <h2> Mexico Health </h2>
+                        <p>
+                        A short introduction about the health situation and efforts to achieve SDG 3 in the country.
+                        </p>
+                    </div>
+
+                    <div class="col-md-4">
+                        <!-- small card with quick fact-->
+                         <div class="card">
+                            <div class="card-body">
+                            <h5 class="card-title">Quick fact</h5>
+                            <p class ="card-text" >
+                                Access to health services is essential for population well-being.
+                            </p>
+                            </div>
+                         </div>
+                    </div>
+                </div>
+            </section>
+
+        <!--Resources section with 3 cards-->
+        <section id="resources" class="mb-5">
+          <h2 class="mb-3">Resources in Mexico</h2>
+          <!-- g-3 grid gap between columns -->
+          <div class="row g-3">
+            <!-- card 1 -->
+            <div class="col-md-4">
+              <!-- h-100 make the card height full so all cards match height -->
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">Lifeline</h5>
+                  <p class="card-text">
+                    Phone lines and help for emergencies and violence.
+                  </p>
+                  <a href="#" class="btn btn-primary btn-sm">More info</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- card 2 -->
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">Food Banks</h5>
+                  <p class="card-text">
+                    Information about where to receive food support.
+                  </p>
+                  <a href="#" class="btn btn-primary btn-sm">More info</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- card 3 -->
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">Health Centers</h5>
+                  <p class="card-text">
+                    Guide to locate nearby health centers.
+                  </p>
+                  <a href="#" class="btn btn-primary btn-sm">More info</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Calculator-->
+        <section id="calculator" class="mb-5">
+            <h2 class="mb-3">Calculator</h2>
+            <p class="text-muted mb-4">Enter your weight (kg) and height (m). Example height: 1.70</p>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-body p-4">
+                  <!-- Form we give it an id so JavaScript can find it easily -->
+                  <form id="bmi-form">
+                    <!-- weight input -->
+                    <div class="mb-3">
+                      <label for="weight" class="form-label">Weight (kg)</label>
+                      <!-- step="0.1": allow decimal values like 68.5 -->
+                      <input
+                        type="number"
+                        step="0.1"
+                        class="form-control"
+                        id="weight"
+                        placeholder="E.g. 68"
+                        required
+                      />
+                    </div>
+
+                    <!-- height input -->
+                    <div class="mb-3">
+                      <label for="height" class="form-label">Height (m)</label>
+                      <!-- step="0.01" allow decimals like 1.70 -->
+                      <input
+                        type="number"
+                        step="0.01"
+                        class="form-control"
+                        id="height"
+                        placeholder="E.g. 1.70"
+                        required
+                      />
+                    </div>
+
+                    <!-- Submit button triggers JavaScript calculation -->
+                    <button type="submit" class="btn btn-primary w-100">Calculate BMI</button>
+                  </form>
+
+                  <!-- Result area JavaScript will put messages here -->
+                  <div id="result" class="mt-3"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>  
+        </div>
+    </main>
+
+    <!-- small copyright and citation -->
+    <footer class="py-3 bg-dark text-light">
+      <div class="container text-center">
+        <small
+          >&copy; 2026 Health Portal Mexico - Inspired by SDG 3 [cite: 1]</small
+        >
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS bundle (includes Popper) so the navbar toggler works -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Link to our custom JavaScript file -->
+    <script src="js/script.js"></script>
+
+    
+    </body>
+</html>
+```
+
+Note added on 09/09/26: We removed the js file from the prototype, but kept the link to it in our html file to ensure we wont make the mistake of forgetting it in the future.
 
 ---
 
@@ -456,6 +678,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 ### Our modifications 
 We commented the given js code and changed any names/identifications we wanted differently or that did not match up with out html. We also fixed the link to the .js file as it wasnt properly connected to our html. 
+
+Note added on 09/09/26: The js file ended up being removed for the prototype submission. It will be added by the beta version, but not yet. This prompt ended up not being used on the project. 
 
 ---
 
@@ -668,3 +892,7 @@ footer {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 ```
+
+We opened a live sever to make sure the style was loaded in and looking just as we codded it. We used the inspection tool to rule out any errors and experiment if there were any changes we wanted to make before the prototype submission. 
+
+---

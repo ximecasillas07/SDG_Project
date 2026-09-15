@@ -8,20 +8,28 @@ body {
   line-height: 1.6;
 }
 
-/* Headings */
+/* Headings (Main Titles: Mexico Health, Resources in Mexico, Calculator, etc.) */
 h1, h2, h3, h4, h5, h6 {
-  color: #0f172a;
+  color: #143601; /* Dark green tone for main titles */
   font-weight: 600;
 }
 
 /* Navbar */
+.navbar {
+  background-color: #193b2d !important; /* Dark green tone background */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
 .navbar-brand {
+  color: #ffffff !important;
   font-weight: 600;
   letter-spacing: 0.5px;
 }
 
 .navbar-dark .navbar-nav .nav-link {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.85);
   transition: color 0.2s ease;
 }
 
@@ -46,7 +54,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .card-title {
-  color: #0f172a;
+  color: #1b4332; /* Slightly dark green tone for card headings */
   font-weight: 600;
 }
 
@@ -78,22 +86,26 @@ h1, h2, h3, h4, h5, h6 {
 .form-control:focus {
   background-color: #ffffff;
   color: #0f172a;
-  border-color: #0d6efd;
-  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+  border-color: #2d6a4f;
+  box-shadow: 0 0 0 0.25rem rgba(45, 106, 79, 0.2);
 }
 
-/* Primary buttons */
+/* Primary buttons (Lighter shade of dark green, but muted/not bright) */
 .btn-primary {
   font-weight: 500;
   padding: 0.6rem 1.25rem;
   border-radius: 0.5rem;
-  background-color: #0d6efd;
-  border-color: #0d6efd;
+  background-color: #2d6a4f; 
+  border-color: #2d6a4f;
+  color: #ffffff;
 }
 
-.btn-primary:hover {
-  background-color: #0b5ed7;
-  border-color: #0a58ca;
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+  background-color: #1b4332;
+  border-color: #1b4332;
+  color: #ffffff;
 }
 
 /* Result box */

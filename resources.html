@@ -4,18 +4,15 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <title> Mexico Health Portal - Resources </title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
-        <link rel="stylesheet" href="css/styles.css"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="css/styles.css" />
     </head>
 
-    <body>
-        <!-- Navbar: navigation bar-->
+    <body class="d-flex flex-column min-vh-100">
+        <!-- Navbar -->
          <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <!-- container center content and add horizontal padding-->
              <div class="container">
-                <!-- site name on the left-->
                 <a class="navbar-brand" href="index.html">Mexico Health</a>
-                <!-- button for collapsing navbar-->
                 <button
                     class="navbar-toggler"
                     type="button"
@@ -25,15 +22,11 @@
                     aria-expanded="false"
                     aria-label="Toggle navigation"
                 >
-                <!-- icon inside the toggler button-->
                  <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <!-- collapsible items -->
                  <div class="collapse navbar-collapse" id="navMenu">
-                    <!-- pushes the list to the right-->
                      <ul class="navbar-nav ms-auto">
-                        <!--each item links to a separate html page-->
                         <li class="nav-item">
                             <a class="nav-link" href="index.html">Home</a>
                         </li>
@@ -51,17 +44,12 @@
              </div>
          </nav>
 
-    <!-- main content-->
-     <main class="py-5">
+     <main class="py-5 flex-grow-1">
         <div class="container">
-            <!--Resources section with 3 cards-->
             <section id="resources" class="mb-5">
               <h2 class="mb-3">Resources in Mexico</h2>
-              <!-- g-3 grid gap between columns -->
               <div class="row g-3">
-                <!-- card 1 -->
                 <div class="col-md-4">
-                  <!-- h-100 make the card height full so all cards match height -->
                   <div class="card h-100">
                     <div class="card-body">
                       <h5 class="card-title">Lifeline</h5>
@@ -73,7 +61,6 @@
                   </div>
                 </div>
 
-                <!-- card 2 -->
                 <div class="col-md-4">
                   <div class="card h-100">
                     <div class="card-body">
@@ -86,7 +73,6 @@
                   </div>
                 </div>
 
-                <!-- card 3 -->
                 <div class="col-md-4">
                   <div class="card h-100">
                     <div class="card-body">
@@ -103,21 +89,13 @@
         </div>
     </main>
 
-    <!-- small copyright and citation -->
-    <footer class="py-3 bg-dark text-light">
+    <footer class="py-3 bg-dark text-light mt-auto">
       <div class="container text-center">
-        <small
-          >&copy; 2026 Health Portal Mexico - Inspired by SDG 3</small
-        >
+        <small>&copy; 2026 Health Portal Mexico - Inspired by SDG 3</small>
       </div>
     </footer>
 
-    <!-- Bootstrap JS bundle (includes Popper) so the navbar toggler works -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Link to our custom JavaScript file -->
     <script src="js/script.js"></script>
-
-    
     </body>
 </html>

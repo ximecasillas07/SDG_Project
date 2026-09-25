@@ -38,6 +38,12 @@ h1, h2, h3, h4, h5, h6 {
   color: #ffffff;
 }
 
+/* Hero SDG 3 Banner Section */
+.hero-sdg-banner {
+  background-color: #193b2d;
+  color: #ffffff;
+}
+
 /* Cards with soft shadow and rounded corners */
 .card {
   background-color: #ffffff;
@@ -51,6 +57,24 @@ h1, h2, h3, h4, h5, h6 {
 .card:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+}
+
+/* Feature Cards Specific Styling */
+.feature-card {
+  border: none;
+  padding: 1rem;
+}
+
+.feature-card .card-title {
+  color: #143601;
+  font-weight: 700;
+}
+
+/* Feature Icons */
+.feature-icon {
+  font-size: 2rem;
+  color: #2d6a4f;
+  margin-bottom: 0.5rem;
 }
 
 .card-title {
@@ -116,4 +140,5 @@ h1, h2, h3, h4, h5, h6 {
 /* Footer */
 footer {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: #193b2d !important;
 }

@@ -3,9 +3,11 @@
     <head>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <title> Mexico Health Portal </title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
-        <link rel="stylesheet" href="css/styles.css"/>
+        <title> Mexico Health Portal - Mexico </title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+        />
+        <link rel="stylesheet" href="css/styles.css" />
     </head>
 
     <body>
@@ -35,10 +37,10 @@
                      <ul class="navbar-nav ms-auto">
                         <!--each item links to a separate html page-->
                         <li class="nav-item">
-                            <a class="nav-link active" href="index.html">Home</a>
+                            <a class="nav-link" href="index.html">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="mexico.html">Mexico</a>
+                            <a class="nav-link active" href="mexico.html">Mexico</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="resources.html">Resources</a>
@@ -54,11 +56,30 @@
     <!-- main content-->
      <main class="py-5">
         <div class="container">
-            <div class="p-5 mb-4 bg-light rounded-3">
-                <h1 class="display-5 fw-bold">Welcome to Mexico Health Portal</h1>
-                <p class="col-md-8 fs-4">Supporting UN SDG Goal 3: Good Health and Well-being in Mexico.</p>
-                <a class="btn btn-primary btn-lg" href="mexico.html">Learn More</a>
-            </div>
+            <!-- Mexico section introduction -->
+            <section id="mexico" class="mb-5">
+                <!-- mb-5 bottom margin -->
+                <div class="row">
+                    <div class="col-md-8">
+                        <h2> Mexico Health </h2>
+                        <p>
+                        A short introduction about the health situation and efforts to achieve SDG 3 in the country.
+                        </p>
+                    </div>
+
+                    <div class="col-md-4">
+                        <!-- small card with quick fact-->
+                         <div class="card">
+                            <div class="card-body">
+                            <h5 class="card-title">Quick fact</h5>
+                            <p class="card-text">
+                                Access to health services is essential for population well-being.
+                            </p>
+                            </div>
+                         </div>
+                    </div>
+                </div>
+            </section>
         </div>
     </main>
 

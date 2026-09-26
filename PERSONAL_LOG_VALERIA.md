@@ -27,3 +27,22 @@
 * **Assessment:** Alejandra made the entire style.css, taking the AI given css file and changing it completely to fit our vision instead, removing code that was not practical and that we had not seen before in class, as well as added animations for better a visual experience. She was also a great help to me, as she helped me learn how to use GitHub.
  
 ---
+
+## Project Beta 
+## 1. Self-Assessment of Work Executed
+
+### Tasks Completed:
+* **HTML modifications:** Added the html for the Mexico, Resources, Calculator sections. Changed the desgin of the main page. 
+
+### Learnings & Reflection:
+* TBA
+
+---
+
+## 2. Peer reflection
+
+### Ximena Casillas
+* **Assessment:** TBA
+
+### Alejandra Eguiarte
+* **Assessment:** TBA

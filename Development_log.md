@@ -50,3 +50,36 @@
 
 **Next Steps:**
 * Recieve feedback for the prototype submission, re-implement a proper js file, and start working on the beta version.
+
+---
+
+### 15/09/26
+**Tasks Completed:**
+* Changed the default bootstrap colors of our site to green.
+* Made the navbar sticky. 
+
+**Challenges Faced:**
+* There were not any particularly hard moments during this part. 
+
+**Solutions & Outcomes:**
+* There were not any particularly hard moments during this part.
+
+**Next Steps:**
+* Use the feedback recieved to properly begin work on the beta version, and start changing up the design of the page to better fit our vision.
+
+---
+
+### 25/09/26
+**Tasks Completed:**
+* TBA
+
+**Challenges Faced:**
+* TBA
+
+**Solutions & Outcomes:**
+* TBA
+
+**Next Steps:**
+* TBA
+
+

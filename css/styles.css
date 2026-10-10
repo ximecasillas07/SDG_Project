@@ -10,13 +10,13 @@ body {
 
 /* Headings (Main Titles: Mexico Health, Resources in Mexico, Calculator, etc.) */
 h1, h2, h3, h4, h5, h6 {
-  color: #143601; /* Dark green tone for main titles */
+  color: #1E592F; /* Dark green tone for main titles */
   font-weight: 600;
 }
 
 /* Navbar */
 .navbar {
-  background-color: #193b2d !important; /* Dark green tone background */
+  background-color: #1E592F !important; /* Dark green tone background */
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -40,7 +40,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Hero SDG 3 Banner Section */
 .hero-sdg-banner {
-  background-color: #193b2d;
+  background-color: #3B8E46;
   color: #ffffff;
 }
 
@@ -66,19 +66,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .feature-card .card-title {
-  color: #143601;
+  color: #1E592F;
   font-weight: 700;
 }
 
 /* Feature Icons */
 .feature-icon {
   font-size: 2rem;
-  color: #2d6a4f;
+  color: #4CAF50;
   margin-bottom: 0.5rem;
 }
 
 .card-title {
-  color: #1b4332; /* Slightly dark green tone for card headings */
+  color: #1E592F; /* Slightly dark green tone for card headings */
   font-weight: 600;
 }
 
@@ -110,8 +110,8 @@ h1, h2, h3, h4, h5, h6 {
 .form-control:focus {
   background-color: #ffffff;
   color: #0f172a;
-  border-color: #2d6a4f;
-  box-shadow: 0 0 0 0.25rem rgba(45, 106, 79, 0.2);
+  border-color: #4CAF50;
+  box-shadow: 0 0 0 0.25rem rgba(76, 175, 80, 0.2);
 }
 
 /* Primary buttons (Lighter shade of dark green, but muted/not bright) */
@@ -119,16 +119,16 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 500;
   padding: 0.6rem 1.25rem;
   border-radius: 0.5rem;
-  background-color: #2d6a4f; 
-  border-color: #2d6a4f;
+  background-color: #4CAF50; 
+  border-color: #4CAF50;
   color: #ffffff;
 }
 
 .btn-primary:hover,
 .btn-primary:focus,
 .btn-primary:active {
-  background-color: #1b4332;
-  border-color: #1b4332;
+  background-color: #3B8E46;
+  border-color: #3B8E46;
   color: #ffffff;
 }
 
@@ -140,5 +140,5 @@ h1, h2, h3, h4, h5, h6 {
 /* Footer */
 footer {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  background-color: #193b2d !important;
+  background-color: #1E592F !important;
 }

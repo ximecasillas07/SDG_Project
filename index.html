@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title> Mexico Health Portal </title>
         <!-- Bootstrap 5 CSS -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Bootstrap Icons -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
         <!-- Custom CSS -->
         <link rel="stylesheet" href="css/styles.css"/>
     </head>
@@ -58,16 +58,27 @@
     <!-- main content-->
      <main class="py-5 flex-grow-1"> <!--forces the copyright bar to stick directly to the bottom of the viewport-->
         <div class="container">
-            <!-- SDG 3 Hero Banner -->
-            <div class="p-5 mb-4 rounded-3 shadow-sm hero-sdg-banner">
-                <h1 class="display-5 fw-bold text-white mb-3">SDG 3: Good Health and Well-being</h1>
-                <p class="col-md-10 fs-5 mb-4 text-light">
-                    Ensuring healthy lives and promoting well-being for all at all ages is essential to sustainable development. Explore health metrics, local resources, and practical wellness tools tailored for Mexico.
-                </p>
-                <a class="btn btn-outline-light btn-lg border-2" href="mexico.html">
-                    Explore Mexico Health <i class="bi bi-arrow-right ms-1"></i>
-                </a>
-            </div>
+            <!-- SDG 3 Hero Banner, added blended green background -->
+            <div class="p-4 p-md-5 mb-4 rounded-4 shadow-sm hero-sdg-banner" style="background: linear-gradient(135deg, #164223 0%, #1E592F 45%, #3B8E46 100%) !important;">
+                <div class="row align-items-center">
+                    <div class="col-lg-10 mx-auto text-center text-lg-start">
+                        <span class="badge rounded-pill bg-white text-dark mb-3 px-3 py-2 fw-semibold">
+                            <i class="bi bi-globe me-1"></i> SDG 3: Good health and well-being
+                        </span>
+                        <h1 class="display-4 fw-bold text-white mb-3">Ensure Healthy Lives in Mexico</h1>
+                        <p class="fs-5 mb-4 text-light opacity-90">
+                            Promoting well-being for all at all ages is essential to sustainable development. Explore health metrics, local resources, and practical wellness tools tailored for Mexico.
+                        </p>
+                        <div class="d-flex flex-wrap justify-content-center justify-content-lg-start gap-3">
+                            <a class="btn btn-outline-light btn-lg rounded-3 px-4" href="mexico.html">
+                                Explore Mexico Health <i class="bi bi-journal-text ms-1"></i>
+                            </a>
+                            <a class="btn btn-light btn-lg text-success fw-bold rounded-3 px-4" href="calculator.html">
+                                    BMI Calculator <i class="bi bi-calculator ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>  
 
             <!-- Three Feature Cards Below Hero Banner -->
             <div class="row g-4 mt-2">

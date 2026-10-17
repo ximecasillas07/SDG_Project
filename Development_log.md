@@ -217,10 +217,11 @@
 
 ### Documentation & Reference Links
 * Inspo for making the map, future reference to be used - [Mexico Map](https://simplemaps.com/svg/country/mx)
+* Polygon usage - [Polygon HTML](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/polygon)
 
 ### Next Horizon Actions
 1. Fix the issues with the mexico map, make sure it fully works as planned.
-2.  Integrate express and API
+2. Integrate express and API
 
 
 

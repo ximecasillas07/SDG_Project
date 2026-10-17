@@ -32,7 +32,9 @@
 ## 1. Self-Assessment of Work Executed
 
 ### Tasks Completed:
-* **HTML modifications:** Added the html for the Mexico, Resources, Calculator sections. Changed the desgin of the main page. 
+* **HTML modifications:** Added the html for the Mexico, Resources, Calculator sections. Changed the design of the main page.
+* **CSS modifications:** Added new feautres in the css to keep up with the changing design of the site.
+* **Mexico Map:** Worked on the map implementation for the website.
 
 ### Learnings & Reflection:
 * TBA

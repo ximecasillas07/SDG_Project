@@ -897,7 +897,7 @@ We opened a live sever to make sure the style was loaded in and looking just as 
 
 ---
 
-## Project Beta Prompts (tba) 
+## Project Beta Prompts (22/10) 
 
 
 ### HTML code prompt 
@@ -1539,6 +1539,76 @@ footer {
   background-color: #193b2d !important;
 }
 ```
+
+### Map code prompt 
+I want you to take this map of Mexico (see screenshot) and superimpose it onto a Cartesian coordinate grid with a viewBox="0 0 1000 700" (where 0,0 is top-left), and extract only the numerical polygon coordinate points (x1,y1 x2,y2 x3,y3...) for each state's simplified geographical contour, listing each state name followed strictly by its sequence of space-separated coordinate pairs without generating any code.
+
+### AI response
+```text
+Baja California: 40,35 110,85 90,180 35,130
+
+Baja California Sur: 70,185 110,240 180,335 225,400 180,390
+
+Sonora: 110,85 265,95 255,255 170,250 120,200
+
+Chihuahua: 265,95 445,100 425,260 330,270 255,255
+
+Coahuila: 445,100 550,150 530,285 435,280 425,260
+
+Sinaloa: 255,255 330,270 390,380 330,410 245,330
+
+Durango: 330,270 435,280 445,380 390,380
+
+Nuevo León: 550,150 600,190 560,295 530,285
+
+Tamaulipas: 600,190 665,245 585,380 560,295
+
+Zacatecas: 435,280 530,285 538,390 445,380
+
+San Luis Potosí: 530,285 585,380 535,420 500,385
+
+Nayarit: 380,390 410,430 380,445 350,425
+
+Jalisco: 390,380 445,380 475,445 410,480 380,445 410,430
+
+Aguascalientes: 475,400 498,400 498,420 475,420
+
+Guanajuato: 475,445 525,440 528,475 480,480
+
+Querétaro: 525,440 560,435 558,465 528,475
+
+Hidalgo: 560,435 605,430 600,465 558,465
+
+Michoacán: 410,480 480,480 520,490 495,545 435,530
+
+Estado de México: 520,490 575,485 570,525 515,520
+
+Ciudad de México: 545,500 560,500 560,515 545,515
+
+Tlaxcala: 590,510 610,510 605,530 585,525
+
+Puebla: 570,525 625,515 620,560 565,550
+
+Veracruz: 585,380 620,450 715,540 685,515 625,515
+
+Guerrero: 475,550 560,530 580,590 535,620 475,585
+
+Oaxaca: 580,590 645,560 760,525 745,550 625,630
+
+Tabasco: 745,550 820,540 815,570 750,565
+
+Chiapas: 750,565 825,580 855,635 750,645
+
+Campeche: 825,540 875,460 915,465 900,545 850,555
+
+Yucatán: 875,460 975,405 970,470 915,465
+
+Quintana Roo: 915,465 980,415 960,510 900,545
+```
+
+
+
+
 
 
 

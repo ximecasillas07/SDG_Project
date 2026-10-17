@@ -29,5 +29,24 @@
  
 ---
 
+## Project Beta 
+## 1. Self-Assessment of Work Executed
+
+### Tasks Completed:
+* **TBA:** TBA
+
+### Learnings & Reflection:
+* TBA
+
+---
+
+## 2. Peer reflection
+
+### Valeria Arias
+* **Assessment:** TBA
+
+### Alejandra Eguiarte
+* **Assessment:** TBA
+
 
 

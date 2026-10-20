@@ -159,4 +159,69 @@
 ### Next Horizon Actions
 1. Implement the JavaScript logic for the BMI calculator on calculator.html.
 
+---
+
+## Session 6 Log Entry
+
+### Session Overview
+* **Date:** 07/10/26
+* **Module/Feature Scope:** JS Calculator Implementation
+* **Est. Time Invested:** TBA hours
+* **Active Developers:** Alejandra Eguiarte
+
+### Session Goals
+- [x] Goal 1: Create and succesfully integrate the js script for the calculator.
+
+### Tasks Completed
+* [x] **JS implementation:** Added the script.js file.
+
+### Challenges Faced
+* **Roadblock:**
+  * *Challenge:* TBA
+  * *Solution:* TBA
+
+### Documentation & Reference Links
+* TBA
+
+### Next Horizon Actions
+1. Add the mexico map, get it fully working.
+2. Plan how to add the new topics covered in class (express, APIs).
+
+---
+
+## Session 7 Log Entry
+
+### Session Overview
+* **Date:** 16/10/26
+* **Module/Feature Scope:** Mexico Portal Implementation
+* **Est. Time Invested:** 5.0 hours
+* **Active Developers:** Valeria Arias
+
+### Session Goals
+- [x] Goal 1: Change some of the design for the website
+- [x] Goal 2: Add the first look and feel for the mexico map by making it ourselves
+- [x] Goal 3: Add some new information for the other htmls 
+
+### Tasks Completed
+* [x] **Mexico Map draft:** Initial implementation of the Mexico Map, not fully working yet.
+* [x] **New html info:** New given info in calculator and resources section.
+* [x] **New index look:** New design for the index
+
+### Challenges Faced
+* **Roadblock (1):**
+  * *Challenge:* The making of the map was a slow, difficult process that I was not sure how to make it easier and make the polygons line up properly or at least to the best I could get it to be.
+  * *Solution:* Instead of attempting to do it manually by trial and error, I ended up taking a screenshot of a map of Mexico, giving it to gemini, and asked it to put it against a Cartesian plane so it could get the exact points for the map and implimented it with those numbers.
+* **Roadblock (2):**
+  * *Challenge:* The gradient for the hero banner was not loading in innitially, and I could not identify the reason why.
+  * *Solution:* I added a backup in case of failure to load in the css, and added the same line of code into the html structure itself with style=, which seemed to have solved the issue.
+
+### Documentation & Reference Links
+* Inspo for making the map, future reference to be used - [Mexico Map](https://simplemaps.com/svg/country/mx)
+* Polygon usage - [Polygon HTML](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/polygon)
+
+### Next Horizon Actions
+1. Fix the issues with the mexico map, make sure it fully works as planned.
+2. Integrate express and API
+
+
 

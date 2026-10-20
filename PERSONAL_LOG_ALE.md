@@ -29,3 +29,23 @@
 
 ---
 
+## Project Beta 
+## 1. Self-Assessment of Work Executed
+
+### Tasks Completed:
+* **JS implementation:** TBA
+
+### Learnings & Reflection:
+* TBA
+
+---
+
+## 2. Peer reflection
+
+### Ximena Casillas
+* **Assessment:** TBA
+
+### Valeria Arias
+* **Assessment:** TBA
+
+

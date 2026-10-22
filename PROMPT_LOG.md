@@ -1606,9 +1606,34 @@ Yucatán: 875,460 975,405 970,470 915,465
 Quintana Roo: 915,465 980,415 960,510 900,545
 ```
 
+### APIs Prompt
+Considering the contents/information we want to include in our website, is there any API out there available that will provide us what we need? I want you to give me a list of what you think would be our the best options.
 
+### AI Response
+Yes, there are several public APIs you can connect your Express backend to! Integrating a real third-party API is a great way to showcase backend strength for your project deliverables.
+Here are the best options you can connect to inside your server.js:
 
+1. Mexican Public Health & Government Data
+* Gobierno de México (datos.gob.mx API):
+- What it offers: Official open data from Mexico's federal government, including public hospital directories, health facilities, and vaccination centers.
+    - Usage: Fetch dataset resources using public REST endpoints.
+    - Link: datos.gob.mx
 
+* INEGI API (Instituto Nacional de Estadística y Geografía):
+- What it offers: State-by-state demographic, mortality, health insurance coverage, and population metrics for every Mexican state. Perfect for showing SDG 3 health progress data alongside your map.
+  - API Access: Requires a free developer token from INEGI.
+  - Link: INEGI API Documentation
+
+2. World Health Organization (WHO) & SDG 3 Indicators
+* WHO Athena / GHO (Global Health Observatory) API:
+- What it offers: Official UN/WHO data specifically tracking SDG Goal 3 indicators (maternal mortality, disease rates, healthcare coverage) for Mexico (MEX).
+  - Access: Completely free, public, and requires no API key.
+  - Endpoint Example: [https://ghoapi.azureedge.net/api/Indicator](https://ghoapi.azureedge.net/api/Indicator)
+
+3. Location & Nearby Resource Mapping
+* Google Places API / Mapbox Places API:
+- What it offers: Real-time search for nearby facilities when a user clicks a state (e.g., query "Food banks in Jalisco, Mexico" or "Hospitales públicos en CDMX").
+  - Notes: Free tiers are available, but require setting up a developer account and API key.
 
 
 

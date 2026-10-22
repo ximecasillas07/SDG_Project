@@ -29,14 +29,16 @@
 
 ---
 
-## Project Beta 
+## Project Beta
 ## 1. Self-Assessment of Work Executed
 
 ### Tasks Completed:
-* **JS implementation:** TBA
+* **JS implementation:** I added the original script.js for the fully functional BMI calculator.
+* **Express and APIs:** I integrated express into our site by coding the server.js and different APIs used in our website, as all the other options online either were pay to use or didn't have everything we needed in one place.
+* **Sources Investigation:** I searched online to try and find usable APIs for our website data, and then when we decided to instead make our own API, I gathered the different reference links for the most accurate information we could find in Mexico.
 
 ### Learnings & Reflection:
-* TBA
+* I strengthened my knowledge of RESTful APIs by making our own for the site, as well as the more professional practice of separating the files into different folders to everything is more secure and legible.
 
 ---
 

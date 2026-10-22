@@ -51,4 +51,4 @@
 * **Assessment:** Ximena worked really hard on this submission for the project; after I pushed the initial draft for the map, she took it upon herself to build the entire map of Mexico fully detailed for our website, it took her around 14 hours to complete it and also make sure it was working. 
 
 ### Alejandra Eguiarte
-* **Assessment:** TBA
+* **Assessment:** Alejandra took on the express and API integration by herself, I only created the files she would be working on and handed her the templates, but she applied the logic and did all the research necessary to fuffil our vision for the website. Without her work, the site's most vital components would not work.

@@ -3,7 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import cors from 'cors';
 
-import statesRoutes from './src/routes/statesRoutes.js';
+import statesRoutes from './src/routes/stateRoutes.js';
 import bmiRoutes from './src/routes/bmiRoutes.js';
 
 const app = express();
@@ -20,7 +20,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/states', statesRoutes);
 app.use('/api/calculator', bmiRoutes);
 
-app.get('*', (req, res) => {
+app.use((req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 

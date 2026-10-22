@@ -7,7 +7,8 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" >
         <!-- Bootstrap Icons -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-        <link rel="stylesheet" href="css/styles.css" >
+        <link rel="stylesheet" href="css/global.css">
+        <link rel="stylesheet" href="css/map.css" >
     </head>
 
     <body class="d-flex flex-column min-vh-100">
@@ -58,75 +59,24 @@
                         <!-- Simplified Polygon Map Matching Geometric Design -->
                         <div class="col-lg-7">
                             <div class="card shadow-sm p-3 border-0 rounded-3">
-                                <div class="text-center">
-                                    <svg viewBox="0 0 1000 670" xmlns="http://www.w3.org/2000/svg" class="w-100" style="max-height: 500px; background-color: #ffffff;">
-                                        <g id="mexico-map" stroke="#1E592F" stroke-width="2" fill="rgba(76, 175, 80, 0.35)">
-                                            <!--Baja California-->
-                                            <polygon id="BC" class="map-region" points="40,35 110,85 90,180 35,130" />
-                                            <!-- Baja California Sur -->
-                                            <polygon id="BCS" class="map-region" points="70,185 110,240 180,335 225,400 180,390" />
-                                            <!-- Sonora -->
-                                            <polygon id="SON" class="map-region" points="110,85 265,95 255,255 170,250 120,200" />
-                                            <!-- Chihuahua -->
-                                            <polygon id="CHIH" class="map-region" points="265,95 445,100 425,260 330,270 255,255" />
-                                            <!-- Coahuila -->
-                                            <polygon id="COAH" class="map-region" points="445,100 550,150 530,285 435,280 425,260" />
-                                            <!-- Sinaloa -->
-                                            <polygon id="SIN" class="map-region" points="255,255 330,270 390,380 330,410 245,330" />
-                                            <!-- Durango -->
-                                            <polygon id="DGO" class="map-region" points="330,270 435,280 445,380 390,380" />
-                                            <!-- Nuevo León -->
-                                            <polygon id="NL" class="map-region" points="550,150 600,190 560,295 530,285" />
-                                            <!-- Tamaulipas -->
-                                            <polygon id="TAMP" class="map-region" points="600,190 665,245 585,380 560,295" />
-                                            <!-- Zacatecas -->
-                                            <polygon id="ZAC" class="map-region" points="435,280 530,285 538,390 445,380" />
-                                            <!-- San Luis Potosí -->
-                                            <polygon id="SLP" class="map-region" points="530,285 585,380 535,420 500,385" />
-                                            <!-- Nayarit -->
-                                            <polygon id="NAY" class="map-region" points="380,390 410,430 380,445 350,425" />
-                                            <!-- Jalisco -->
-                                            <polygon id="JAL" class="map-region" points="390,380 445,380 475,445 410,480 380,445 410,430" />
-                                            <!-- Aguascalientes -->
-                                            <polygon id="AGS" class="map-region" points="475,400 498,400 498,420 475,420" />
-                                            <!-- Guanajuato -->
-                                            <polygon id="GTO" class="map-region" points="475,445 525,440 528,475 480,480" />
-                                            <!-- Querétaro -->
-                                            <polygon id="QRO" class="map-region" points="525,440 560,435 558,465 528,475" />
-                                            <!-- Hidalgo -->
-                                            <polygon id="HGO" class="map-region" points="560,435 605,430 600,465 558,465" />
-                                            <!-- Michoacán -->
-                                            <polygon id="MICH" class="map-region" points="410,480 480,480 520,490 495,545 435,530" />
-                                            <!-- Estado de México -->
-                                            <polygon id="MEX" class="map-region" points="520,490 575,485 570,525 515,520" />
-                                            <!-- Ciudad de México -->
-                                            <polygon id="CDMX" class="map-region" points="545,500 560,500 560,515 545,515" fill="#1E592F" />
-                                            <!-- Tlaxcala -->
-                                            <polygon id="TLAX" class="map-region" points="590,510 610,510 605,530 585,525" />
-                                            <!-- Puebla -->
-                                            <polygon id="PUE" class="map-region" points="570,525 625,515 620,560 565,550" />
-                                            <!-- Veracruz -->
-                                            <polygon id="VER" class="map-region" points="585,380 620,450 715,540 685,515 625,515" />
-                                            <!-- Guerrero -->
-                                            <polygon id="GRO" class="map-region" points="475,550 560,530 580,590 535,620 475,585" />
-                                            <!-- Oaxaca -->
-                                            <polygon id="OAX" class="map-region" points="580,590 645,560 760,525 745,550 625,630" />
-                                            <!-- Tabasco -->
-                                            <polygon id="TAB" class="map-region" points="745,550 820,540 815,570 750,565" />
-                                            <!-- Chiapas -->
-                                            <polygon id="CHP" class="map-region" points="750,565 825,580 855,635 750,645" />
-                                            <!-- Campeche -->
-                                            <polygon id="CAMP" class="map-region" points="825,540 875,460 915,465 900,545 850,555" />
-                                            <!-- Yucatán -->
-                                            <polygon id="YUC" class="map-region" points="875,460 975,405 970,470 915,465" />
-                                            <!-- Quintana Roo -->
-                                            <polygon id="QROO" class="map-region" points="915,465 980,415 960,510 900,545" />
-                                        </g>
+                                <div class="text-center position-relative">
+                                    <svg id="mexico-svg" viewBox="0 0 1000 670" xmlns="http://www.w3.org/2000/svg" class="w-100" style="max-height:520px; background-color: #ffffff;">
+                                        <g id="mexico-map"></g>
                                     </svg>
                                 </div>
                             </div>
                         </div>
+                    <div class="col-lg-5">
+                        <div id="state-details-container">
+                                <div class="card shadow-sm border-0 rounded-3 p-4 text-center text-muted">
+                                    <i class="bi bi-geo-alt fs-1 text-success mb-2"></i>
+                                    <h5>State Explorer</h5>
+                                    <p class="small mb-0">Click on any state on the map to view its hospitals, food banks, and emergency phone numbers.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                </div>
             </section>
         </div>
     </main>
@@ -138,6 +88,6 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/script.js"></script>
-    </body>
+    <script src="js/map.js"></script>    
+</body>
 </html>

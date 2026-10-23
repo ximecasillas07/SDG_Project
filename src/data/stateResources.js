@@ -1,3 +1,43 @@
+/**
+ * @fileoverview In-memory database storing verified health infrastructure,
+ * food bank networks, and crisis contact numbers across Mexican states.
+ * 
+ * @module data/stateResources
+ */
+
+/**
+ * @typedef {Object} FoodBank
+ * @property {string} name - Official institution or food bank name.
+ * @property {string} address - Physical street address and neighborhood.
+ * @property {string} phone - Direct public contact telephone number.
+ */
+
+/**
+ * @typedef {Object} HealthCenter
+ * @property {string} name - Official clinic or hospital name.
+ * @property {string} type - Care classification level (e.g., General Hospital, High Specialty).
+ * @property {string} address - Physical location of the facility.
+ */
+
+/**
+ * @typedef {Object} EmergencyNumbers
+ * @property {string} lifeline - National life aid hotline ("Línea de la Vida").
+ * @property {string} localEmergency - Universal emergency response number (911).
+ */
+
+/**
+ * @typedef {Object} StateData
+ * @property {string} stateName - Official name of the state.
+ * @property {Array<FoodBank>} foodBanks - Registered food assistance and community hubs.
+ * @property {Array<HealthCenter>} healthCenters - Public reference clinics and hospitals.
+ * @property {EmergencyNumbers} emergencyNumbers - Critical telephone hotlines.
+ */
+
+/**
+ * Regional resource registry keyed by state code.
+ * @type {Record<string, StateData>}
+ */
+
 export const stateResources = {
     "AGS": {
         stateName: "Aguascalientes",
@@ -193,6 +233,14 @@ export const stateResources = {
     }
 
 };
+
+/**
+ * generates a fallback template for states or codes without a dedicated record.
+ * 
+ * @function defaultStateResource
+ * @param {string} stateId - Input region identifier code.
+ * @returns {StateData} Standard fallback structure containing federal contact helplines.
+ */
 
 export const defaultStateResource = (stateId) => ({
     stateName: `Estado (${stateId})`,

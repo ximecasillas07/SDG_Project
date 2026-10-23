@@ -1,8 +1,39 @@
+/**
+ * @fileoverview Express Router for calculations and BMI clasification.
+ * Validate the anthropometric user's data acording to the WHO standards.
+ * 
+ * @module routes/bmiRoutes
+ * @requires express
+ */
+
 import express from 'express';
 
 const router = express.Router();
 
-// POST /api/calculator/bmi
+/**
+ * @typedef {Object} BMISuccessResponse
+ * @property {boolean} success - Transaction state (true).
+ * @property {number} bmi - body mass index rounded to one decimal.
+ * @property {string} classification - Qualitative diagnosis according to the WHO.
+ * @property {string} alertType - Bootstrap semantic class ('info' | 'success' | 'warning' | 'danger').
+ * @property {number} pointerPercent - Percentage (0-100) to place the pointer in the visual spectrum .
+ */
+
+/**
+ * @typedef {Object} BMIErrorResponse
+ * @property {boolean} success - Transaction state (false).
+ * @property {string} error - Descriptive message regarding the reason for the rejection.
+ */
+
+/**
+ * Process the calculations of the BMI based on the weight and height.
+ * 
+ * @name POST /api/calculator/bmi
+ * @function
+ * @param {express.Request} req - Request object; expects { weight, height } in req.body.
+ * @param {express.Response<BMISuccessResponse|BMIErrorResponse>} res - Response object JSON.
+ * @returns {void}
+ */
 router.post('/bmi', (req, res) => {
     let { weight, height } = req.body;
 

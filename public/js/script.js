@@ -1,3 +1,8 @@
+/**
+ * @fileoverview Frontend client controller managing interactive BMI form 
+ * submissions and SVG interactive map regional health data lookups.
+ */
+
 document.addEventListener('DOMContentLoaded', () => {
 
     const form = document.getElementById('bmi-form');
@@ -42,6 +47,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+    
+    /**
+     * shows static alerts in the calculator's results container.
+     * 
+     * @function showMessage
+     * @param {string} text - Message or raw HTML markup to display.
+     * @param {'success'|'danger'|'warning'|'info'} type - Bootstrap contextual alert class.
+     * @returns {void}
+     */
 
     function showMessage(text, type) {
         if (resultDiv) {
@@ -90,6 +104,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    /**
+     * Renders parsed health listings into the details card container.
+     * 
+     * 
+     * * @function renderStateResources
+     * @param {Object} data - Regional health record data.
+     * @param {string} data.stateName - State name.
+     * @param {Array<{name: string, address: string, phone: string}>} data.foodBanks - Array of food banks.
+     * @param {Array<{name: string, type: string, address: string}>} data.healthCenters - Array of medical centers.
+     * @param {{lifeline: string, localEmergency: string}} data.emergencyNumbers - Contact aid lines.
+     * @returns {void}
+     */
+
     function renderStateResources(data) {
         if (!stateDetailsContainer) return;
 
@@ -126,6 +153,14 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
     }
+
+/**
+     * Displays a styled warning error message inside the details container.
+     * 
+     * @function renderErrorMessage
+     * @param {string} message - Error description to display.
+     * @returns {void}
+     */
 
     function renderErrorMessage(message) {
         if (!stateDetailsContainer) return;

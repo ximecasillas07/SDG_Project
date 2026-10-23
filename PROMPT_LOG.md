@@ -2444,7 +2444,811 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 ```
+---
 
+### JSDoc prompt 
+I am building an Express.js backend for an SDG (ODS 3: Good Health and Well-Being) web application. My project requires strict, formal documentation using JSDoc. Please do the following:
+1. Explain what JSDoc is, how it works, and why it is used (syntax fundamentals, type definitions, and tooling/IDE integration).
+2. Review and refactor the sample server code below so it follows standard JSDoc annotations.
+```import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import cors from 'cors';
+
+import statesRoutes from './src/routes/stateRoutes.js';
+import bmiRoutes from './src/routes/bmiRoutes.js';
+
+const app = express();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/api/states', statesRoutes);
+app.use('/api/calculator', bmiRoutes);
+
+app.use((req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.listen(3000, () => {
+  console.log('Server is running on http://localhost:3000')
+});
+```
+
+### AI response
+JSDoc is a markup documentation syntax designed specifically for JavaScript.
+
+Because standard JavaScript is a dynamically typed language (meaning variables don't explicitly declare whether they are numbers, strings, or specific objects), JSDoc allows you to add type definitions, descriptions, parameter explanations, and return types directly inside specialized multi-line comments.
+
+1. How the Syntax Works
+JSDoc blocks always begin with a slash and two asterisks /** and end with */. Each line in between begins with a single asterisk. Inside these blocks, you use special tags (prefixed with @).
+If you wrote regular comments (// or /* */), the IDE would treat them merely as notes. The double asterisk (/**) tells code editors and doc tools to parse the block as JSDoc metadata.
+
+2. Common JSDoc Tags
+@fileoverview: Describes the purpose of the entire file or module.
+@param: Defines the expected type, name, and description of a function argument.
+@returns (or @return): Explains what the function outputs and its data type.
+@typedef: Creates custom complex types/models (e.g., shape of an API response or database row).
+@property: Defines an individual property inside a @typedef object.
+@type: Forces a specific type onto a variable or DOM element inline.
+@throws: Documents possible errors or exceptions thrown.
+
+3. What Does It Actually Do?
+JSDoc works on three main levels:
+
+A. Rich IDE Autocompletion & Tooltips (IntelliSense)
+Modern editors like VS Code read JSDoc natively.
+
+When you hover your cursor over calculateBMI(), VS Code displays a clean popup explaining what weight and height mean.
+
+When you start typing calculateBMI(, the editor suggests the exact types and warn if you forget an argument.
+
+B. TypeScript-Grade Type Checking (Without Compiling)
+You can get the type safety of TypeScript without having to convert .js files to .ts or install a build compiler. By adding // @ts-check at the top of a .js file, your editor will flag errors based on your JSDoc types:
+```// @ts-check
+
+/**
+ * @param {number} a
+ * @param {number} b
+ * @returns {number}
+ */
+function add(a, b) {
+    return a + b;
+}
+
+add("5", 10); // ❌ Red squiggly underline: Argument of type 'string' is not assignable to parameter of type 'number'.
+```
+C. Automatic HTML Documentation Generation
+Using the official jsdoc command-line tool via npm:
+```npx jsdoc server.js src/**/*.js -d docs```
+JSDoc scans your code, reads every /** ... */ block, and generates a static website (HTML/CSS) listing all your endpoints, functions, and datasets for your team or professors to read.
+
+4. Applied Example from Your Project
+Here is the file, formally documented using the JSDoc standard—including descriptive typing (@param, @returns, @typedef, @type)—along with clear explanations of the technical logic behind routes, middleware, and DOM manipulation.
+
+```/**
+ * @fileoverview Main Express server entry point for the Mexico Health Portal (UN SDG 3)[cite: 1].
+ * Configures global middleware, serves static frontend client assets,
+ * and mounts modular REST API sub-routers.
+ * 
+ * @module server
+ * @requires express
+ * @requires path
+ * @requires url
+ * @requires cors
+ */
+
+import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import cors from 'cors';
+
+// Modular application routers
+import statesRoutes from './src/routes/stateRoutes.js';
+import bmiRoutes from './src/routes/bmiRoutes.js';
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Reconstruct __dirname equivalent for ES Modules (ESM)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// ==========================================
+// Global Middleware Pipeline
+// ==========================================
+
+/** Enable Cross-Origin Resource Sharing (CORS) */
+app.use(cors());
+
+/** Parse incoming request bodies with JSON payloads */
+app.use(express.json());
+
+/** Parse incoming request bodies containing standard URL-encoded form data */
+app.use(express.urlencoded({ extended: true }));
+
+/** Static file server serving frontend assets (HTML, CSS, JS, images) */
+app.use(express.static(path.join(__dirname, 'public')));
+
+// ==========================================
+// REST API Routing Endpoints
+// ==========================================
+
+/** Endpoints to retrieve health infrastructure and support resources for Mexican states */
+app.use('/api/states', statesRoutes);
+
+/** Endpoints for biometric computations (BMI calculator for SDG 3) */
+app.use('/api/calculator', bmiRoutes);
+
+// ==========================================
+// Fallback & Single-Page Application (SPA) Routing
+// ==========================================
+
+/**
+ * Wildcard route handler that intercepts unmatched GET requests and returns index.html.
+ * 
+ * @name get/*
+ * @function
+ * @param {express.Request} req - Express incoming request object.
+ * @param {express.Response} res - Express response object.
+ */
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// Initialize HTTP service listener
+app.listen(PORT, () => {
+    console.log(`[HTTP] Server running successfully at http://localhost:${PORT}`);
+});
+```
+
+### Our modifications 
+We did the comments for the rest of them and then asked the AI for feedback and for help fixing them:
+server.js:
+```/**
+ * @fileoverview Main express server for the Mexico Health Portal (ODS 3).
+ * configures the global middlewares, serves static frontend files
+ * and links the REST API routers.
+ *
+ * @module server
+ * @requires express
+ * @requires path
+ * @requires url
+ * @requires cors
+ */
+
+import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import cors from 'cors';
+
+import statesRoutes from './src/routes/statesRoutes.js';
+import bmiRoutes from './src/routes/bmiRoutes.js';
+
+const app = express();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+/** Enable Cross-Origin Resource Sharing (CORS) */
+app.use(cors());
+/** Parse incoming request */
+app.use(express.json());
+/** Parses URL-encoded data from traditional forms */
+app.use(express.urlencoded({ extended: true }));
+/** Static file server for the user interface (HTML, CSS, JS, images) */
+app.use(express.static(path.join(__dirname, 'public')));
+
+/** Endpoints for consulting health for the 32 states */
+app.use('/api/states', statesRoutes);
+/** Endpoints for BMI */
+app.use('/api/calculator', bmiRoutes);
+
+/**
+ * a catch for redirecting every unknown route to the client's index.
+ * @name get/*
+ * @function
+ * @param {express.Request} req - HTTP request object.
+ * @param {express.Response} res - HTTP request object.
+ */
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.listen(3000, () => {
+  console.log('Server is running on http://localhost:3000')
+});
+```
+stateRoutes.js:
+```/**
+ * @fileoverview Express router for the regional health resources, medical centers,
+ * and emergency hotline number for mexican states.
+ * 
+ * @module routes/stateRoutes
+ * @requires express
+ * @requires ../data/stateResources.js
+ */
+
+import express from 'express';
+import { stateResources, defaultStateResource } from '../data/stateResources.js';
+
+const router = express.Router();
+
+/**
+ * Retrieves regional directory data based on an ISO/postal abbreviation code.
+ * 
+ * @name GET /api/states/:stateId
+ * @function
+ * @param {express.Request<{ stateId: string }>} req - Express request object containing the regional code in req.params (e.g., "JAL", "CDMX").
+ * @param {express.Response} res - Express HTTP response object returning JSON records or a default fallback.
+ * @returns {void}
+ */
+router.get('/:stateId', (req, res) => {
+    try {
+        const stateId = req.params.stateId.toUpperCase().trim();
+        const data = stateResources[stateId] || defaultStateResource(stateId);
+
+        return res.status(200).json({
+            success: true,
+            stateCode: stateId,
+            data: data
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            error: "Error del servidor al obtener los datos del estado."
+        });
+    }
+});
+
+export default router;
+```
+bmiRoutes.js:
+```/**
+ * @fileoverview Express Router for calculations and BMI clasification.
+ * Validate the anthropometric user's data acording to the WHO standards.
+ * 
+ * @module routes/bmiRoutes
+ * @requires express
+ */
+
+import express from 'express';
+
+const router = express.Router();
+
+/**
+ * @typedef {Object} BMISuccessResponse
+ * @property {boolean} success - Transaction state (true).
+ * @property {number} bmi - body mass index rounded to one decimal.
+ * @property {string} classification - Qualitative diagnosis according to the WHO.
+ * @property {string} alertType - Bootstrap semantic class ('info' | 'success' | 'warning' | 'danger').
+ * @property {number} pointerPercent - Percentage (0-100) to place the pointer in the visual spectrum .
+ */
+
+/**
+ * @typedef {Object} BMIErrorResponse
+ * @property {boolean} success - Transaction state (false).
+ * @property {string} error - Descriptive message regarding the reason for the rejection.
+ */
+
+/**
+ * Process the calculations of the BMI based on the weight and height.
+ * 
+ * @name POST /api/calculator/bmi
+ * @function
+ * @param {express.Request} req - Request object; expects { weight, height } in req.body.
+ * @param {express.Response<BMISuccessResponse|BMIErrorResponse>} res - Response object JSON.
+ * @returns {void}
+ */
+router.post('/bmi', (req, res) => {
+    let { weight, height } = req.body;
+
+    if (weight === undefined || height === undefined || weight === '' || height === '') {
+        return res.status(400).json({
+            success: false,
+            error: "Por favor proporciona tanto el peso (kg) como la estatura (m o cm)."
+        });
+    }
+
+    let numWeight = parseFloat(weight);
+    let numHeight = parseFloat(height);
+
+    if (isNaN(numWeight) || isNaN(numHeight) || numWeight <= 0 || numHeight <= 0) {
+        return res.status(400).json({
+            success: false,
+            error: "El peso y la estatura deben ser números positivos mayores a 0."
+        });
+    }
+
+    if (numHeight > 10) {
+        numHeight = numHeight / 100;
+    }
+
+    if (numHeight < 0.5 || numHeight > 3.0 || numWeight > 500) {
+        return res.status(400).json({
+            success: false,
+            error: "Por favor ingresa valores numéricos realistas."
+        });
+    }
+
+    const bmi = parseFloat((numWeight / (numHeight * numHeight)).toFixed(1));
+    let classification = '';
+    let alertType = 'info';
+    let pointerPercent = 50;
+
+    if (bmi < 18.5) {
+        classification = 'Bajo peso';
+        alertType = 'warning';
+        pointerPercent = Math.max(5, (bmi / 18.5) * 25);
+    }
+    else if (bmi < 25) {
+        classification = 'Peso normal';
+        alertType = 'success';
+        pointerPercent = 25 + ((bmi - 18.5) / 6.5) * 30;
+    }
+    else if (bmi < 30) {
+        classification = 'Sobrepeso';
+        alertType = 'warning';
+        pointerPercent = 55 + ((bmi - 25) / 5) * 25;
+    }
+    else {
+        classification = 'Obesidad';
+        alertType = 'danger';
+        pointerPercent = Math.min(96, 80 + ((bmi - 30) / 10) * 16);
+    }
+
+    return res.status(200).json({
+        success: true,
+        bmi: bmi,
+        classification: classification,
+        alertType: alertType,
+        pointerPercent: pointerPercent
+    });
+});
+
+export default router;
+```
+stateResources.js:
+```/**
+ * @fileoverview In-memory database storing verified health infrastructure,
+ * food bank networks, and crisis contact numbers across Mexican states.
+ * 
+ * @module data/stateResources
+ */
+
+/**
+ * @typedef {Object} FoodBank
+ * @property {string} name - Official institution or food bank name.
+ * @property {string} address - Physical street address and neighborhood.
+ * @property {string} phone - Direct public contact telephone number.
+ */
+
+/**
+ * @typedef {Object} HealthCenter
+ * @property {string} name - Official clinic or hospital name.
+ * @property {string} type - Care classification level (e.g., General Hospital, High Specialty).
+ * @property {string} address - Physical location of the facility.
+ */
+
+/**
+ * @typedef {Object} EmergencyNumbers
+ * @property {string} lifeline - National life aid hotline ("Línea de la Vida").
+ * @property {string} localEmergency - Universal emergency response number (911).
+ */
+
+/**
+ * @typedef {Object} StateData
+ * @property {string} stateName - Official name of the state.
+ * @property {Array<FoodBank>} foodBanks - Registered food assistance and community hubs.
+ * @property {Array<HealthCenter>} healthCenters - Public reference clinics and hospitals.
+ * @property {EmergencyNumbers} emergencyNumbers - Critical telephone hotlines.
+ */
+
+/**
+ * Regional resource registry keyed by state code.
+ * @type {Record<string, StateData>}
+ */
+
+export const stateResources = {
+    "AGS": {
+        stateName: "Aguascalientes",
+        foodBanks: [{ name: "Banco de Alimentos de Aguascalientes", address: "Av. Mahatma Gandhi 202, Fracc. El Plata, Aguascalientes", phone: "449 978 2878" }],
+        healthCenters: [{ name: "Hospital General Tercer Milenio", type: "Hospital General (ISSEA)", address: "Av. Siglo XXI 3804, Cd Satélite, Aguascalientes" }],
+        emergencyNumbers: { lifeline: "800 911 2000", localEmergency: "911" }
+    },
+    "BC": {
+        stateName: "Baja California",
+        foodBanks: [{ name: "Banco de Alimentos de Tijuana (Banati)", address: "Calle Francisco Javier Mina 1205, Fracc. Presa Rodríguez, Tijuana", phone: "664 629 2700" }],
+        healthCenters: [{ name: "Hospital General de Tijuana", type: "Hospital General (IMSS-Bienestar)", address: "Av. Centenario 10851, Zona Urbana Rio Tijuana, Tijuana" }],
+        emergencyNumbers: { lifeline: "800 911 2000", localEmergency: "911" }
+    },
+    "BCS": {
+        stateName: "Baja California Sur",
+        foodBanks: [{ name: "Banco de Alimentos de San José del Cabo", address: "Calle Idelfonso Green s/n, San José del Cabo", phone: "624 142 3680" }],
+        healthCenters: [{ name: "Hospital General con Especialidades Juan María de Salvatierra", type: "Hospital Regional", address: "Av. de los Deportistas s/n, Bella Vista, La Paz" }],
+        emergencyNumbers: { lifeline: "800 911 2000", localEmergency: "911" }
+    },
+    "CAM": {
+        stateName: "Campeche",
+        foodBanks: [{ name: "Banco de Alimentos de Campeche (Red BAMX / DIF Estatal)", address: "Calle 10 584, Barrio de San Román, San Francisco de Campeche", phone: "981 816 4141" }],
+        healthCenters: [{ name: "Hospital General Dr. Javier Buenfil Osorio", type: "Hospital General de Especialidades", address: "Av. Central s/n, Fracc. San Rafael, Campeche" }],
+        emergencyNumbers: { lifeline: "800 911 2000", localEmergency: "911" }
+    },
+    "CHIS": {
+        stateName: "Chiapas",
+        foodBanks: [{ name: "Banco de Alimentos de Tuxtla Gutiérrez", address: "Libramiento Norte Poniente s/n, Tuxtla Gutiérrez", phone: "961 615 1588" }],
+        healthCenters: [{ name: "Hospital General Dr. Jesús Gilberto Gómez Maza", type: "Hospital Regional de Alta Especialidad", address: "Carretera Chiapa de Corzo Km 7.5, Tuxtla Gutiérrez" }],
+        emergencyNumbers: { lifeline: "800 911 2000", localEmergency: "911" }
+    },
+    "CHIH": {
+        stateName: "Chihuahua",
+        foodBanks: [{ name: "Cáritas y Banco de Alimentos de Chihuahua", address: "Calle Sierra San Miguel 3300, Col. Rodríguez, Chihuahua", phone: "614 415 4121" }],
+        healthCenters: [{ name: "Hospital General Salvador Zubirán Anchondo", type: "Hospital General", address: "Av. Teófilo Borunda y Colón, Centro, Chihuahua" }],
+        emergencyNumbers: { lifeline: "800 911 2000", localEmergency: "911" }
+    },
+    "CDMX": {
+        stateName: "Ciudad de México",
+        foodBanks: [{ name: "Banco de Alimentos BAMX Central de Abasto", address: "Bodega I-91, Central de Abasto, Iztapalapa, CDMX", phone: "55 5694 2000" }],
+        healthCenters: [{ name: "Hospital General de México Dr. Eduardo Liceaga", type: "Hospital de Alta Especialidad", address: "Dr. Balmis 148, Cuauhtémoc, Doctores, CDMX" }],
+        emergencyNumbers: { lifeline: "800 911 2000", localEmergency: "911" }
+    },
+    "COAH": {
+        stateName: "Coahuila",
+        foodBanks: [{ name: "Banco de Alimentos de Saltillo", address: "Vito Alessio Robles 4707, Industrial Saltillo, Saltillo", phone: "844 415 5777" }],
+        healthCenters: [{ name: "Hospital General de Saltillo", type: "Hospital General (IMSS-Bienestar)", address: "Dámaso Rodríguez González s/n, Centro Metropolitano, Saltillo" }],
+        emergencyNumbers: { lifeline: "800 911 2000", localEmergency: "911" }
+    },
+    "COL": {
+        stateName: "Colima",
+        foodBanks: [{ name: "Banco de Alimentos de Colima", address: "Av. Gonzalo de Sandoval s/n, Oriente, Colima", phone: "312 312 8820" }],
+        healthCenters: [{ name: "Hospital Regional Universitario de Colima", type: "Hospital Regional", address: "Av. Liceo de Varones 401, La Esperanza, Colima" }],
+        emergencyNumbers: { lifeline: "800 911 2000", localEmergency: "911" }
+    },
+    "DGO": {
+        stateName: "Durango",
+        foodBanks: [{ name: "Banco de Alimentos de Durango", address: "Calle Pino Suárez 1009 Pte., Zona Centro, Durango", phone: "618 811 0565" }],
+        healthCenters: [{ name: "Hospital General 450", type: "Hospital General de Especialidades", address: "Boulevard José María Patoni 403, Durango" }],
+        emergencyNumbers: { lifeline: "800 911 2000", localEmergency: "911" }
+    },
+    "MEX": {
+        stateName: "Estado de México",
+        foodBanks: [{ name: "Banco de Alimentos de Toluca (BAMX)", address: "Av. Benito Juárez García s/n, San Mateo Oxtotitlán, Toluca", phone: "722 214 7474" }],
+        healthCenters: [{ name: "Centro Médico Adolfo López Mateos", type: "Hospital de Especialidades (ISEM)", address: "Av. Nicolás San Juan s/n, Ex Hacienda La Magdalena, Toluca" }],
+        emergencyNumbers: { lifeline: "800 911 2000", localEmergency: "911" }
+    },
+    "GTO": {
+        stateName: "Guanajuato",
+        foodBanks: [{ name: "Banco de Alimentos de León", address: "Calle Brasil 201, Col. Obrera, León", phone: "477 717 6223" }],
+        healthCenters: [{ name: "Hospital General de León", type: "Hospital General Regional", address: "Vía de los Plateros 201, Fracc. El Peluchán, León" }],
+        emergencyNumbers: { lifeline: "800 911 2000", localEmergency: "911" }
+    },
+    "GRO": {
+        stateName: "Guerrero",
+        foodBanks: [{ name: "Cáritas y Banco de Alimentos de Acapulco", address: "Calle Quebrada 16, Centro, Acapulco", phone: "744 482 1215" }],
+        healthCenters: [{ name: "Hospital General de Acapulco El Quemado", type: "Hospital General (IMSS-Bienestar)", address: "Carretera Nacional México-Acapulco Km 393, El Quemado, Acapulco" }],
+        emergencyNumbers: { lifeline: "800 911 2000", localEmergency: "911" }
+    },
+    "HGO": {
+        stateName: "Hidalgo",
+        foodBanks: [{ name: "Banco de Alimentos del Centro de Hidalgo", address: "Cerrada San Salvador s/n, Real de Minas, Pachuca", phone: "771 719 3505" }],
+        healthCenters: [{ name: "Hospital General de Pachuca", type: "Hospital General (SSH / IMSS-Bienestar)", address: "Carretera Pachuca-Tulancingo 101, Cd. de los Niños, Pachuca" }],
+        emergencyNumbers: { lifeline: "800 911 2000", localEmergency: "911" }
+    },
+    "JAL": {
+        stateName: "Jalisco",
+        foodBanks: [{ name: "Banco de Alimentos Guadalajara (BAMX)", address: "Calle Santa María 2140, San Anita, Tlaquepaque", phone: "33 3810 6595" }],
+        healthCenters: [{ name: "Hospital General de Occidente (Zoquipan)", type: "Hospital Público", address: "Av. Zoquipan 1050, Zoquipan, Zapopan" }],
+        emergencyNumbers: { lifeline: "800 911 2000", localEmergency: "911" }
+    },
+    "MICH": {
+        stateName: "Michoacán",
+        foodBanks: [{ name: "Banco de Alimentos de Morelia", address: "Calle Lago de Pátzcuaro 342, Ventura Puente, Morelia", phone: "443 313 1899" }],
+        healthCenters: [{ name: "Hospital General Dr. Miguel Silva", type: "Hospital General", address: "Carretera Morelia-Salamanca Km 5.5, Morelia" }],
+        emergencyNumbers: { lifeline: "800 911 2000", localEmergency: "911" }
+    },
+    "MOR": {
+        stateName: "Morelos",
+        foodBanks: [{ name: "Banco de Alimentos de Cuernavaca", address: "Calle Vicente Guerrero 43, San Cristóbal, Cuernavaca", phone: "777 313 0855" }],
+        healthCenters: [{ name: "Hospital General de Cuernavaca Dr. José G. Parres", type: "Hospital General (SSM)", address: "Av. Domingo Diez s/n, Lomas de la Selva, Cuernavaca" }],
+        emergencyNumbers: { lifeline: "800 911 2000", localEmergency: "911" }
+    },
+    "NAY": {
+        stateName: "Nayarit",
+        foodBanks: [{ name: "Banco de Alimentos de Tepic (BAMX)", address: "Calle Durango 224 Sur, Centro, Tepic", phone: "311 212 9015" }],
+        healthCenters: [{ name: "Hospital Civil Dr. Antonio González Guevara", type: "Hospital General (IMSS-Bienestar)", address: "Calzada del Ejército s/n, Fray Junípero Serra, Tepic" }],
+        emergencyNumbers: { lifeline: "800 911 2000", localEmergency: "911" }
+    },
+    "NL": {
+        stateName: "Nuevo León",
+        foodBanks: [{ name: "Cáritas de Monterrey (Banco de Alimentos)", address: "Francisco I. Madero 844 Poniente, Centro, Monterrey", phone: "81 1340 2200" }],
+        healthCenters: [{ name: "Hospital Metropolitano Dr. Bernardo Sepúlveda", type: "Hospital General de Especialidades", address: "Av. Adolfo López Mateos 4600, San Nicolás de los Garza" }],
+        emergencyNumbers: { lifeline: "800 911 2000", localEmergency: "911" }
+    },
+    "OAX": {
+        stateName: "Oaxaca",
+        foodBanks: [{ name: "Banco de Alimentos de Oaxaca", address: "Privada de Colón 102, Centro, Oaxaca de Juárez", phone: "951 516 7543" }],
+        healthCenters: [{ name: "Hospital General Dr. Aurelio Valdivieso", type: "Hospital Civil", address: "Calzada Porfirio Díaz s/n, Reforma, Oaxaca de Juárez" }],
+        emergencyNumbers: { lifeline: "800 911 2000", localEmergency: "911" }
+    },
+    "PUE": {
+        stateName: "Puebla",
+        foodBanks: [{ name: "Banco de Alimentos Cáritas Puebla", address: "Camino a Manzanilla 5402, Fracc. El Álamos, Puebla", phone: "222 288 6161" }],
+        healthCenters: [{ name: "Hospital General del Sur Dr. Eduardo Vázquez Navarro", type: "Hospital General", address: "Antiguo Camino a Guadalupe Hidalgo 11350, Agua Santa, Puebla" }],
+        emergencyNumbers: { lifeline: "800 911 2000", localEmergency: "911" }
+    },
+    "QRO": {
+        stateName: "Querétaro",
+        foodBanks: [{ name: "Banco de Alimentos de Querétaro (Al AIRE)", address: "Calle Escobedo 104, Centro, Santiago de Querétaro", phone: "442 212 0451" }],
+        healthCenters: [{ name: "Hospital General de Querétaro", type: "Hospital Público de Especialidades", address: "Prolongación Zaragoza 1050, Prados de la Capilla, Querétaro" }],
+        emergencyNumbers: { lifeline: "800 911 2000", localEmergency: "911" }
+    },
+    "QROO": {
+        stateName: "Quintana Roo",
+        foodBanks: [{ name: "Banco de Alimentos de Quintana Roo", address: "Región 97, Manzana 31, Lote 1, Cancún", phone: "998 888 7143" }],
+        healthCenters: [{ name: "Hospital General de Cancún Dr. Jesús Kumate Rodríguez", type: "Hospital General", address: "Av. Arco Vial s/n, SM 248, Cancún" }],
+        emergencyNumbers: { lifeline: "800 911 2000", localEmergency: "911" }
+    },
+    "SLP": {
+        stateName: "San Luis Potosí",
+        foodBanks: [{ name: "Banco de Alimentos de San Luis Potosí", address: "Calle Segunda Ote. 120, Central de Abastos, San Luis Potosí", phone: "444 824 5770" }],
+        healthCenters: [{ name: "Hospital Central Dr. Ignacio Morones Prieto", type: "Hospital de Alta Especialidad", address: "Av. Venustiano Carranza 2395, Zona Universitaria, San Luis Potosí" }],
+        emergencyNumbers: { lifeline: "800 911 2000", localEmergency: "911" }
+    },
+    "SIN": {
+        stateName: "Sinaloa",
+        foodBanks: [{ name: "Banco de Alimentos de Culiacán", address: "Segunda Cda. de Recursos Hidráulicos 222, San Rafael, Culiacán", phone: "667 718 8040" }],
+        healthCenters: [{ name: "Hospital General de Culiacán Dr. Bernardo J. Gastélum", type: "Hospital General", address: "Calle Aldama y Escobedo s/n, Culiacán" }],
+        emergencyNumbers: { lifeline: "800 911 2000", localEmergency: "911" }
+    },
+    "SON": {
+        stateName: "Sonora",
+        foodBanks: [{ name: "Banco de Alimentos de Hermosillo", address: "Calle Cabo San Lucas s/n, Floresta, Hermosillo", phone: "662 210 2748" }],
+        healthCenters: [{ name: "Hospital General del Estado Dr. Ernesto Ramos Bours", type: "Hospital General", address: "Blvd. Luis Encinas Johnson y Calle 14, Hermosillo" }],
+        emergencyNumbers: { lifeline: "800 911 2000", localEmergency: "911" }
+    },
+    "TAB": {
+        stateName: "Tabasco",
+        foodBanks: [{ name: "Banco de Alimentos de Villahermosa (BAMX)", address: "Periférico Carlos Pellicer Cámara s/n, Tabasco 2000, Villahermosa", phone: "993 316 2950" }],
+        healthCenters: [{ name: "Hospital Regional de Alta Especialidad Dr. Juan Graham Casasús", type: "Hospital de Alta Especialidad", address: "Carretera Villahermosa-La Isla Km 1.5, Villahermosa" }],
+        emergencyNumbers: { lifeline: "800 911 2000", localEmergency: "911" }
+    },
+    "TAM": {
+        stateName: "Tamaulipas",
+        foodBanks: [{ name: "Banco de Alimentos de Ciudad Victoria", address: "Calle Francisco I. Madero 420, Zona Centro, Cd. Victoria", phone: "834 316 1100" }],
+        healthCenters: [{ name: "Hospital General de Ciudad Victoria Dr. Norberto Treviño Zapata", type: "Hospital General", address: "Calle Lic. Carlos Adrián Avilés s/n, Cd. Victoria" }],
+        emergencyNumbers: { lifeline: "800 911 2000", localEmergency: "911" }
+    },
+    "TLAX": {
+        stateName: "Tlaxcala",
+        foodBanks: [{ name: "Banco de Alimentos Cáritas Tlaxcala", address: "Calle Independencia 14, Centro, Tlaxcala de Xicohténcatl", phone: "246 462 0500" }],
+        healthCenters: [{ name: "Hospital General de Tlaxcala Lic. Anselmo Cervantes", type: "Hospital Regional (IMSS-Bienestar)", address: "Carretera San Damián Tlacocalpan s/n, San Matías Tepetomatitlán" }],
+        emergencyNumbers: { lifeline: "800 911 2000", localEmergency: "911" }
+    },
+    "VER": {
+        stateName: "Veracruz",
+        foodBanks: [{ name: "Banco de Alimentos de Veracruz (BAMX)", address: "Av. 16 de Septiembre 923, Ricardo Flores Magón, Veracruz", phone: "229 932 1010" }],
+        healthCenters: [{ name: "Hospital de Alta Especialidad de Veracruz", type: "Hospital Regional / Especialidades", address: "Av. 20 de Noviembre 1074, Centro, Veracruz" }],
+        emergencyNumbers: { lifeline: "800 911 2000", localEmergency: "911" }
+    },
+    "YUC": {
+        stateName: "Yucatán",
+        foodBanks: [{ name: "Banco de Alimentos de Mérida", address: "Calle 60 412 x 45 y 47, Centro, Mérida", phone: "999 924 8080" }],
+        healthCenters: [{ name: "Hospital General Dr. Agustín O'Horán", type: "Hospital General", address: "Av. Jacinto Canek por Av. Itzaes, Centro, Mérida" }],
+        emergencyNumbers: { lifeline: "800 911 2000", localEmergency: "911" }
+    },
+    "ZAC": {
+        stateName: "Zacatecas",
+        foodBanks: [{ name: "Banco de Alimentos de Zacatecas", address: "Carretera a Sauceda de la Borda Km 1.5, Guadalupe, Zacatecas", phone: "492 923 2055" }],
+        healthCenters: [{ name: "Hospital General de Zacatecas Luz González Cosío", type: "Hospital Público Regional", address: "Av. San Ramón s/n, Fracc. La Escondida, Zacatecas" }],
+        emergencyNumbers: { lifeline: "800 911 2000", localEmergency: "911" }
+    }
+
+};
+
+/**
+ * generates a fallback template for states or codes without a dedicated record.
+ * 
+ * @function defaultStateResource
+ * @param {string} stateId - Input region identifier code.
+ * @returns {StateData} Standard fallback structure containing federal contact helplines.
+ */
+
+export const defaultStateResource = (stateId) => ({
+    stateName: `Estado (${stateId})`,
+    foodBanks: [{ name: "Red de Bancos de Alimentos (BAMX)", address: "Centro Regional", phone: "800 123 4567" }],
+    healthCenters: [{ name: "Centro de Salud Urbano", type: "Atención Primaria", address: "Plaza Principal" }],
+    emergencyNumbers: { lifeline: "800 911 2000", localEmergency: "911" }
+});
+
+/*referencias:
+    https://bamx.org.mx/encuentra-tu-banco/
+    https://www.datos.gob.mx/dataset/directorio_unidades_medicas_imss_bienestar
+    http://www.dgis.salud.gob.mx/contenidos/basesdedatos/da_recursos_gobmx.html
+    https://www.datos.gob.mx/dataset/padron_clinicas_farmacias_hospitales/resource/ab1783c3-e6f6-4f9c-9c2c-2bd8f49969d0
+*/
+```
+script.js:
+```/**
+ * @fileoverview Frontend client controller managing interactive BMI form 
+ * submissions and SVG interactive map regional health data lookups.
+ */
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    const form = document.getElementById('bmi-form');
+    const weightInput = document.getElementById('weight');
+    const heightInput = document.getElementById('height');
+    const resultDiv = document.getElementById('result');
+    const bmiPointer = document.getElementById('bmi-pointer');
+
+    if (form) {
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const weight = weightInput.value;
+            const height = heightInput.value;
+
+            if (resultDiv) resultDiv.innerHTML = '';
+
+            try {
+                const response = await fetch('/api/calculator/bmi', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json' 
+                    },
+                    body: JSON.stringify({ weight, height })
+                });
+
+                const data = await response.json();
+
+                if (!data.success) {
+                    showMessage(data.error, 'danger');
+                    return;
+                }
+
+                showMessage(`Tu IMC es <strong>${data.bmi}</strong> — <strong>${data.classification}</strong>.`, data.alertType);
+
+                if (bmiPointer) {
+                    bmiPointer.style.left = `${data.pointerPercent}%`;
+                }
+
+            } catch (error) {
+                showMessage('Error al conectar con el servidor para calcular el IMC. Inténtalo más tarde.', 'danger');
+            }
+        });
+    }
+    
+    /**
+     * shows static alerts in the calculator's results container.
+     * 
+     * @function showMessage
+     * @param {string} text - Message or raw HTML markup to display.
+     * @param {'success'|'danger'|'warning'|'info'} type - Bootstrap contextual alert class.
+     * @returns {void}
+     */
+
+    function showMessage(text, type) {
+        if (resultDiv) {
+            resultDiv.innerHTML = `
+                <div class="alert alert-${type} text-center mb-4 py-3 border-0 shadow-sm" role="alert">
+                    ${text}
+                </div>
+            `;
+        }
+    }
+
+    const mapRegions = document.querySelectorAll('.map-region');
+    const stateDetailsContainer = document.getElementById('state-details-container');
+
+    if (mapRegions.length > 0) {
+        mapRegions.forEach(region => {
+            region.addEventListener('click', async (e) => {
+                const stateId = e.target.id;
+
+                mapRegions.forEach(r => r.classList.remove('active-region'));
+                e.target.classList.add('active-region');
+
+                if (stateDetailsContainer) {
+                    stateDetailsContainer.innerHTML = `
+                        <div class="card shadow-sm border-0 rounded-3 p-4 text-center">
+                            <div class="spinner-border text-success mx-auto my-3" role="status">
+                            </div>
+                            <p class="text-secondary mb-0">Consultando información de salud para ${stateId}...</p>
+                        </div>
+                    `;
+                }
+
+                try {
+                    const response = await fetch(`/api/states/${stateId}`);
+                    const result = await response.json();
+
+                    if (result.success) {
+                        renderStateResources(result.data);
+                    } else {
+                        renderErrorMessage(result.error || 'No se pudieron cargar los recursos del estado.');
+                    }
+                } catch (error) {
+                    renderErrorMessage('Error de conexión al consultar los datos del mapa.');
+                }
+            });
+        });
+    }
+
+    /**
+     * Renders parsed health listings into the details card container.
+     * 
+     * 
+     * * @function renderStateResources
+     * @param {Object} data - Regional health record data.
+     * @param {string} data.stateName - State name.
+     * @param {Array<{name: string, address: string, phone: string}>} data.foodBanks - Array of food banks.
+     * @param {Array<{name: string, type: string, address: string}>} data.healthCenters - Array of medical centers.
+     * @param {{lifeline: string, localEmergency: string}} data.emergencyNumbers - Contact aid lines.
+     * @returns {void}
+     */
+
+    function renderStateResources(data) {
+        if (!stateDetailsContainer) return;
+
+        const foodBanksList = data.foodBanks.map(fb => 
+            `<li>
+              <strong>${fb.name}</strong><br>
+              <small>${fb.address} — Tel: ${fb.phone}</small>
+            </li>`
+        ).join('');
+
+        const healthCentersList = data.healthCenters.map(hc => 
+            `<li>
+              <strong>${hc.name}</strong> (${hc.type})<br>
+              <small>${hc.address}</small>
+            </li>`
+        ).join('');
+
+        stateDetailsContainer.innerHTML = `
+            <div class="card shadow-sm border-0 rounded-3 fade-in">
+                <div class="card-body p-4">
+                    <h3 class="card-title mb-3 text-success fw-bold">${data.stateName}</h3>
+                    <hr>
+                    
+                    <h5 class="mt-3"><i class="bi bi-basket text-success me-2"></i>Bancos de Alimentos</h5>
+                    <ul class="list-unstyled ps-2">${foodBanksList}</ul>
+
+                    <h5 class="mt-4"><i class="bi bi-hospital text-success me-2"></i>Centros de Salud</h5>
+                    <ul class="list-unstyled ps-2">${healthCentersList}</ul>
+
+                    <h5 class="mt-4"><i class="bi bi-telephone-inbound text-success me-2"></i>Líneas de Emergencia</h5>
+                    <p class="mb-1"><strong>Línea de la Vida:</strong> ${data.emergencyNumbers.lifeline}</p>
+                    <p class="mb-0"><strong>Emergencia Estatal:</strong> ${data.emergencyNumbers.localEmergency}</p>
+                </div>
+            </div>
+        `;
+    }
+
+/**
+     * Displays a styled warning error message inside the details container.
+     * 
+     * @function renderErrorMessage
+     * @param {string} message - Error description to display.
+     * @returns {void}
+     */
+
+    function renderErrorMessage(message) {
+        if (!stateDetailsContainer) return;
+        stateDetailsContainer.innerHTML = `
+            <div class="alert alert-warning text-center border-0 py-3 shadow-sm" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>${message}
+            </div>
+        `;
+    }
+});
+```
+---
 
 
 

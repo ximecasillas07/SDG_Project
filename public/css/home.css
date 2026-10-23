@@ -1,0 +1,20 @@
+.hero-sdg-banner {
+  background: linear-gradient(135deg, #164223 0%, #1E592F 45%, #3B8E46 100%) !important;
+  color: #ffffff;
+}
+
+.feature-card {
+  border: none;
+  padding: 1rem;
+}
+
+.feature-card .card-title {
+  color: #1E592F;
+  font-weight: 700;
+}
+
+.feature-icon {
+  font-size: 2rem;
+  color: #4CAF50;
+  margin-bottom: 0.5rem;
+}

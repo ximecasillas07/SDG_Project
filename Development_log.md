@@ -166,7 +166,7 @@
 ### Session Overview
 * **Date:** 07/10/26
 * **Module/Feature Scope:** JS Calculator Implementation
-* **Est. Time Invested:** TBA hours
+* **Est. Time Invested:** Half an hour
 * **Active Developers:** Alejandra Eguiarte
 
 ### Session Goals
@@ -176,12 +176,10 @@
 * [x] **JS implementation:** Added the script.js file.
 
 ### Challenges Faced
-* **Roadblock:**
-  * *Challenge:* TBA
-  * *Solution:* TBA
+* There were not any particularly hard moments during this part. 
 
 ### Documentation & Reference Links
-* TBA
+* There were not any reference links used in this session.
 
 ### Next Horizon Actions
 1. Add the mexico map, get it fully working.
@@ -193,7 +191,7 @@
 
 ### Session Overview
 * **Date:** 16/10/26
-* **Module/Feature Scope:** Mexico Portal Implementation
+* **Module/Feature Scope:** Mexico Portal Draft Implementation
 * **Est. Time Invested:** 5.0 hours
 * **Active Developers:** Valeria Arias
 
@@ -222,6 +220,79 @@
 ### Next Horizon Actions
 1. Fix the issues with the mexico map, make sure it fully works as planned.
 2. Integrate express and API
+
+---
+
+## Session 8 Log Entry
+
+### Session Overview
+* **Date:** 20/10/26
+* **Module/Feature Scope:** Mexico Portal progress & Express
+* **Est. Time Invested:** 8.0 hours
+* **Active Developers:** Valeria Arias, Alejandra Eguiarte, Ximena Casillas
+
+### Session Goals
+- [x] Goal 1: Start the accurate look of the map (make it look like Mexico, add more points for exact location)
+- [x] Goal 2: Add express and APIs
+- [x] Goal 3: Reorganize the project directories
+
+### Tasks Completed
+* [x] **Mexico Map progress:** Started working on adding more points into the map
+* [x] **Organized project structure:** Added new folders to start cleaning up our repository, keep our code separated, safe, and legible.
+* [x] **Express and API integration:** Integrated express and made the APIs for our site
+
+### Challenges Faced
+* **Roadblock (1):**
+  * *Challenge:* The original way of making the map using polygons in the html was leaving it looking unpolished and innacurate.
+  * *Solution:*  To replace the inaccurate geometric polygon map, Ximena began to implement a precise SVG path approach using vector coordinates. She imported a well-defined SVG Mexico map image into GeoGebra, centered it at the origin, and systematically plotted sequential boundary points, tracing each state's exact contours from north to south. These generated coordinate datasets and reference screenshots began to be organized into a central document to be processed into a structured states.json file.
+* **Roadblock (2):**
+  * *Challenge:* There were multiple external APIs out there online with useful information related to our project, but some of them were pay to use, and none of the information we wanted to put into our site existed in one single API.
+  * *Solution:* We developed a custom RESTful API using Node.js and Express. By structuring our own endpoints (/api/states and /api/calculator/bmi) and hosting a unified JSON dataset of verified health resources we put it all the data we deemed necessary for our site in a single place.
+
+### Documentation & Reference Links
+* SVG Map reference - [Mexico Map](https://simplemaps.com/svg/country/mx)
+* Mexico food banks - [BAMX](https://bamx.org.mx/encuentra-tu-banco/)
+* Health Units - [GOV data](https://www.datos.gob.mx/dataset/directorio_unidades_medicas_imss_bienestar)
+* Health Resources - [GOV health data](http://www.dgis.salud.gob.mx/contenidos/basesdedatos/da_recursos_gobmx.html)
+* Registry of clinics, hospitals, etc. - [Registry](https://www.datos.gob.mx/dataset/padron_clinicas_farmacias_hospitales/resource/ab1783c3-e6f6-4f9c-9c2c-2bd8f49969d0)
+
+### Next Horizon Actions
+1. Finish the map and make it fully functional.
+
+---
+
+## Session 9 Log Entry
+
+### Session Overview
+* **Date:** 21/10/26
+* **Module/Feature Scope:** Mexico Portal Implementation
+* **Est. Time Invested:** 6.0 hours
+* **Active Developers:** Valeria Arias, Ximena Casillas
+
+### Session Goals
+- [x] Goal 1: Finish the map and make it fully functional
+- [x] Goal 2: Update all logs for the beta submission
+- [x] Goal 3: Make sure it meets all requirements
+
+### Tasks Completed
+* [x] **Mexico Map:** The map was finished and made operational
+* [x] **Organized project structure:** Separation of the css and js. 
+* [x] **Logs:** The logs were updated
+
+### Challenges Faced
+* **Roadblock:**
+  * *Challenge:* Sometimes the points were inaccurate and wouldn't match up together.
+  * *Solution:*  Performing very thorough checks of the points to make sure they were the real numnbers and that the map was actually shaping up correctly.
+
+### Documentation & Reference Links
+* SVG Map reference - [Mexico Map](https://simplemaps.com/svg/country/mx)
+
+### Next Horizon Actions
+1. Receive feedback for the beta submission.
+2. Start working on the final version.
+
+---
+
 
 
 

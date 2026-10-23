@@ -134,40 +134,8 @@ h1, h2, h3, h4, h5, h6 {
   color: #ffffff;
 }
 
-.map-region {
-  fill: rgba(76, 175, 80, 0.35);
-  stroke: #1E592F;
-  stroke-width: 2;
-  cursor: default;
-}
-
-/* BMI Spectrum Bar */
-.bmi-spectrum-bar {
-  height: 12px;
-  border-radius: 6px;
-  background: linear-gradient(90deg, #46c8b2 0%, #34d399 25%, #f59e0b 60%, #ef4444 100%);
-}
-
-.bmi-pointer {
-  position: absolute;
-  top: 50%;
-  width: 18px;
-  height: 18px;
-  background-color: #1E592F;
-  border: 3px solid #ffffff;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transition: left 0.4s ease;
-}
-
-/* Result box */
-#result {
-  min-height: 2.5rem;
-}
-
-/* Footer */
 footer {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   background-color: #1E592F !important;
 }
+

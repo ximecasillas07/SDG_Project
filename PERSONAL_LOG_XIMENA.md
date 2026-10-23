@@ -33,20 +33,22 @@
 ## 1. Self-Assessment of Work Executed
 
 ### Tasks Completed:
-* **TBA:** TBA
+* **Mexico Map:** To fix the previous Mexico map we had, I used Geogebra by putting a SVG Mexico map image into GeoGebra, then I traced each state's exact borders from north to south. With the generated coordinates and reference screenshots I processed into a structured states.json file, creating the foundational boundary data needed to render an accurate interactive map. I made sure that the IDs of the states connected to the information so that when you cliked on a state you would get that specific state's data.
+* **Project file organization:** I separated the different css and js to keep our code more structured.
+* **Connected API:** I connected the created API to the map so that the information would load when you click on a state.
 
 ### Learnings & Reflection:
-* TBA
+* I learned how to use Geogebra to superimpose an image so that I could trace the state's exact outline, something I hadn't done before as I only used it every once in a while for math class graphs.
+* I learned the importance of human analysis when involving AI, because there were times when, despite giving it the exact points, the AI would generate its own instead of using the correct ones. That shows how checking everything an AI gives you is crucial.
 
 ---
-
 ## 2. Peer reflection
 
 ### Valeria Arias
-* **Assessment:** TBA
+* **Assessment:** Valeria did a lot for this submission, she made the new htmls, changed the design from a bootstrap looking template to our own vision for the site, and gave the initial idea for the map. Thanks to her polygon draft of the map, I was able to get the idea of the exact points for the Mexico map and the simple map SVG link.
 
 ### Alejandra Eguiarte
-* **Assessment:** TBA
+* **Assessment:** Alejandra made the information we wanted to be on our site possible to get, she was the one who researched everything and integrated express and the APIs so the map could actually work.  
 
 
 

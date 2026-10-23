@@ -15,7 +15,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import cors from 'cors';
 
-import statesRoutes from './src/routes/statesRoutes.js';
+import statesRoutes from './src/routes/stateRoutes.js';
 import bmiRoutes from './src/routes/bmiRoutes.js';
 
 const app = express();

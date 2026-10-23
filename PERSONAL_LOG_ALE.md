@@ -45,9 +45,9 @@
 ## 2. Peer reflection
 
 ### Ximena Casillas
-* **Assessment:** TBA
+* **Assessment:** Ximena did an outstanding job with the Mexico map. It took her a lot of time and dedication to make it so perfect and functional. But now it is a fundamental part of our website, and it gives it a lot of life and professionalism.
 
 ### Valeria Arias
-* **Assessment:** TBA
+* **Assessment:** Valeria developed the design that we had envisioned for our website and made the new HTMLs. In general, she helped a lot to divide our website into logical and efficient codes. 
 
 

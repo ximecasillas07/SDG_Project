@@ -325,6 +325,7 @@
 ### Documentation & Reference Links
 * Database Cloud Service - [MongoDB Atlas](https://www.mongodb.com/atlas)
 * Authentication Standard - [JSON Web Tokens (JWT)](https://jwt.io/)
+* External Postal API - [SEPOMEX API](http://icalialabs.github.io/sepomex/)
 
 ### Next Horizon Actions
 1. Implement a page for the account, and when the BMI is calculated, for that BMI to appear on the account page.

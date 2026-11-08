@@ -34,7 +34,7 @@ router.get('/:stateId', (req, res) => {
     } catch (error) {
         return res.status(500).json({
             success: false,
-            error: "Error del servidor al obtener los datos del estado."
+            error: "Server error while retrieving state data."
         });
     }
 });

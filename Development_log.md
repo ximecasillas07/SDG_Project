@@ -293,6 +293,45 @@
 
 ---
 
+## Session 10 Log Entry
+
+### Session Overview
+* **Date:** 08/11/26
+* **Module/Feature Scope:** User registration pipeline, Third-Party API integration, and About page implementation
+* **Est. Time Invested:** 4.0 hours
+* **Active Developers:** Valeria Arias
+
+### Session Goals
+- [x] Goal 1: Implement About Page
+- [x] Goal 2: Create Account page, let users sign up to the site, with proper error handling.
+- [x] Goal 3: Use SEPOMEX API connection
+
+### Tasks Completed
+* [x] **User Account Registration:** Configured user registration (`/api/auth/signup`) storing bcrypt-hashed passwords in MongoDB Atlas and issuing JWT tokens upon success.
+* [x] **Input Validation & Security:** Added Regex matching on both client and server sides to filter out invalid names, non-existent blood types, and spam/gibberish in the allergies field.
+* [x] **API Resilience & State Loading:** Implemented a robust client/server fallback mechanism that gracefully defaults to a local 32-state array whenever the third-party SEPOMEX API fails or times out.
+* [x] **Routing & Pathing Fixes:** Corrected fetch routing to absolute paths (`/api/...`) to prevent HTML catch-all collision errors.
+* [x] **About Page Integration:** Finalized structure and content for the portal's About page.
+
+### Challenges Faced
+**Roadblock 1:**
+  * *Challenge:* Accounts were not saving to MongoDB Atlas, resulting in `404` and `ReferenceError: User is not defined` errors due to relative fetch URLs and a missing model import in the auth routes.
+  * *Solution:* First, I used console.logs to debug and identify what the problem was. Then, updated client-side fetch calls to absolute paths (`/api/auth/signup`) and verified model imports (`import User from '../models/User.js'`) to complete the database write pipeline.
+
+**Roadblock 2:**
+  * *Challenge:* The external SEPOMEX third-party API for loading Mexican states frequently failed to connect or timed out, causing dropdown loading errors on the registration page.
+  * *Solution:* Integrated a server-side timeout handler alongside a full client-side fallback list of all 32 Mexican states, ensuring seamless user experience regardless of third-party API availability.
+
+### Documentation & Reference Links
+* Database Cloud Service - [MongoDB Atlas](https://www.mongodb.com/atlas)
+* Authentication Standard - [JSON Web Tokens (JWT)](https://jwt.io/)
+
+### Next Horizon Actions
+1. Implement a page for the account, and when the BMI is calculated, for that BMI to appear on the account page.
+2. Solve the API connection issue.
+
+---
+
 
 
 

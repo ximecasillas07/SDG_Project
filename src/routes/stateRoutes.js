@@ -36,7 +36,12 @@ router.get('/dropdown', async (req, res) => {
     const timeoutId = setTimeout(() => controller.abort(), 3000);
 
     try {
-        const apiResponse = await fetch('https://api.copomex.com/query/get_estados?token=pruebas');
+        const apiResponse = await fetch('https://api.copomex.com/query/get_estados?token=20a8c359-6195-4e44-a053-8709b14979ef', {
+            headers: { 'Accept': 'application/json' },
+            signal: controller.signal
+        });
+
+        clearTimeout(timeoutId);
 
         if (!apiResponse.ok) {
             throw new Error(`SEPOMEX API status ${apiResponse.status}`);
@@ -44,11 +49,11 @@ router.get('/dropdown', async (req, res) => {
 
         const data = await apiResponse.json();
 
-        if (data.error || !Array.isArray(data.response)) {
-            throw new Error('Invalid response structure from SEPOMEX');
+        if (data.error || !data.response || !Array.isArray(data.response.estado)) {
+            throw new Error('Invalid response structure from API');
         }
 
-        return res.status(200).json({ success: true, response: data.response });
+        return res.status(200).json({ success: true, response: data.response.estado });
     } catch (error) {
         clearTimeout(timeoutId);
         console.warn('SEPOMEX API request failed or timed out. Serving fallback states list:', error.message);

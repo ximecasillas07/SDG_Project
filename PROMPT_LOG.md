@@ -3250,6 +3250,672 @@ document.addEventListener('DOMContentLoaded', () => {
 ```
 ---
 
+## Project Final Prompts (1/12) 
+
+### Account creation prompt
+I want to make it possible for users to create an account for our website. If they already have an account, they just have to sign in using their email and password. If they dont have one, i want it to show up as a little option (Dont have an account? Create one!) When a person creates their account, I want it to ask for their name, give them options of blood types so they can select theirs, give them options for allergies so they can select theirs (or others if its not on the list), and where they are from in Mexico. To select where they are from, I want to use a free Third party API. To achieve the creation of the account, I want to use MongoDB Atlas. Can you tell me the steps to use it? 
+
+### AI Response
+Here is what you need to do on the MongoDB Atlas site:
+
+1. Whitelist Your IP Address (Network Access)
+By default, Atlas blocks all incoming connections for security.
+- Log into MongoDB Atlas.
+- In the left sidebar under Security, click Network Access.
+- Click the + Add IP Address button.
+- Click Add Current IP Address (or select Allow Access from Anywhere for testing, which adds 0.0.0.0/0).
+- Click Confirm.
+
+2. Create a Database User (Database Access)
+Your app needs a database username and password to log in.
+- In the left sidebar under Security, click Database Access.
+- Click + Add New Database User.
+- Choose Password as the authentication method.
+- Enter a Username (e.g., admin) and set a strong Password. (Save these!)
+- Under Database User Privileges, select Read and write to any database.
+- Click Add User.
+
+3. Get Your Connection String
+- In the left sidebar under Deployment, click Database (or Clusters).
+- Click the Connect button next to your cluster.
+- Select Drivers (under Connect to your application).
+- Copy the connection string provided.
+
+4. Paste It Into Your .env File
+- Open your local .env file and update:
+```
+PORT=3000
+MONGO_URI=mongodb+srv://YOUR_DB_USER:YOUR_DB_PASSWORD@cluster0.abcde.mongodb.net/
+JWT_SECRET=super_secret_key_2026
+```
+
+### Our modifications and follow-up prompt
+Added mexico_health_db?retryWrites=true&w=majority after mongodb.net so Mongoose automatically creates and uses that specific database. Changed JWT_SECRET to "super_secret_sdg3_mexico_health_key_2026".
+Can you give me the auth.html for this? I will create a new models folder and a User.js inside it to use Mongoose's built-in pre('save') hook to hash passwords automatically before saving them to MongoDB, ensuring high security. I  only want you to give me the userSchema. 
+
+### AI response 
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDG 3 Health App - Account Registration</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #1E592F;
+            --dark-green: #143D20;
+        }
+        body {
+            background-color: #f4f7f6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .bg-custom-green {
+            background-color: var(--primary-green) !important;
+        }
+        .btn-custom-green {
+            background-color: var(--primary-green);
+            color: #ffffff;
+            border: none;
+        }
+        .btn-custom-green:hover {
+            background-color: var(--dark-green);
+            color: #ffffff;
+        }
+        .auth-card {
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-custom-green">
+        <div class="container">
+            <a class="navbar-link navbar-brand fw-bold" href="/index.html">SDG 3 Mexico Health</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link text-white" href="/index.html">Home</a>
+                <a class="nav-link text-white" href="/calculator.html">BMI Calculator</a>
+                <a class="nav-link text-white fw-bold active" href="/auth.html">Account</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Registration Container -->
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card auth-card p-4 bg-white">
+                    <h2 class="text-center fw-bold mb-4" style="color: var(--primary-green);">Create Your Account</h2>
+                    
+                    <!-- Alert Message Container -->
+                    <div id="alertMessage" class="alert d-none" role="alert"></div>
+
+                    <form id="signupForm" novalidate>
+                        <!-- Full Name -->
+                        <div class="mb-3">
+                            <label for="name" class="form-label font-weight-bold">Full Name</label>
+                            <input type="text" class="form-control" id="name" required placeholder="e.g. Valeria Gómez">
+                        </div>
+
+                        <!-- Email Address -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="email" required placeholder="e.g. 0241852@up.edu.mx or user@gmail.com">
+                        </div>
+
+                        <!-- Password -->
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" minlength="6" required placeholder="At least 6 characters">
+                        </div>
+
+                        <!-- Row for Blood Type & State Location -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="bloodType" class="form-label">Blood Type</label>
+                                <select class="form-select" id="bloodType" required>
+                                    <option value="" selected disabled>Select Blood Type</option>
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                    <option value="O+">O+</option>
+                                    <option value="O-">O-</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="state" class="form-label">State (Mexico)</label>
+                                <select class="form-select" id="state" required>
+                                    <option value="" selected disabled>Loading States...</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Allergies (Comma separated) -->
+                        <div class="mb-4">
+                            <label for="allergies" class="form-label">Known Allergies <span class="text-muted">(optional, comma-separated)</span></label>
+                            <input type="text" class="form-control" id="allergies" placeholder="e.g. Penicillin, Peanuts, Pollen">
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-custom-green w-100 py-2 fw-bold">Register Account</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Client Script -->
+    <script src="/js/auth.js"></script>
+</body>
+</html>
+```
+
+```
+const userSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: [true, 'Name is required'],
+        trim: true
+    },
+    email: {
+        type: String,
+        required: [true, 'Email is required'],
+        unique: true,
+        lowercase: true,
+        trim: true,
+        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
+    },
+    password: {
+        type: String,
+        required: [true, 'Password is required'],
+        minlength: [6, 'Password must be at least 6 characters']
+    },
+    bloodType: {
+        type: String,
+        required: [true, 'Blood type is required'],
+        enum: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']
+    },
+    allergies: {
+        type: [String],
+        default: []
+    },
+    location: {
+        state: {
+            type: String,
+            required: [true, 'State location is required']
+        }
+    }
+}, {
+    timestamps: true
+});
+```
+
+### Our modifications
+Removed the style from the html, made our own css for the auth. The navbar was looking different from the others, so I added the global css to the page as well. Changed the navbar layout code to match the other htmls, added validation in the schema so people can't insert gibberish into the allergies or name, and changed the validation in the email so mails with @up.edu.mx could be accepted. 
+```
+const userSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: [true, 'Name is required'],
+        trim: true,
+        match: [/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s'-]{2,50}$/, 'Please enter a valid full name (letters only, 2-50 characters)']
+    },
+    email: {
+        type: String,
+        required: [true, 'Email is required'],
+        unique: true,
+        lowercase: true,
+        trim: true,
+        match: [/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'Please fill a valid email address']
+    },
+    password: {
+        type: String,
+        required: [true, 'Password is required'],
+        minlength: [6, 'Password must be at least 6 characters']
+    },
+    bloodType: {
+        type: String,
+        required: [true, 'Blood type is required'],
+        enum: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']
+    },
+    allergies: {
+        type: [String],
+        default: [],
+        validate: {
+            validator: function (allergiesArray) {
+                const allergyRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s'-]{2,30}$/; // Rejects array items containing numbers or gibberish formats
+                return allergiesArray.every(allergy => 
+                    allergyRegex.test(allergy) && !/(.)\1{3,}/.test(allergy)
+                );
+            },
+            message: 'Allergies should only contain valid words separated by commas, without numbers or random characters.'
+        }
+    },
+    location: {
+        state: {
+            type: String,
+            required: [true, 'State location is required']
+        }
+    }
+}, {
+    timestamps: true
+});
+```
+
+### Third-Party API integration Prompt
+The third-party API I want to use is the SEPOMEX API. How can I connect it if I only want it to affect the user selecting what state they are from, I do not want it to affect anything regarding the mexico map. Consider this is how my files and folders are organized, pay attention to the instructions in the () so you know what you can modify and what you cannot: 
+```txt
+mexico-health-portal/
+├── .env
+├── server.js (I will add any imports and endpoints myself)
+├── src/
+│   └── routes/
+│       ├── stateRoutes.js (Proxies SEPOMEX 3rd-party API for state dropdown)
+│       ├── authRoutes.js (I want it to handle signup and authentication logic)
+│       └── bmiRoutes.js (Handles BMI calculations, do not touch it)
+└── public/
+    ├── css/
+    │   └── auth.css (Don't touch it)        
+    ├── js/
+    │   └── auth.js (Client JS for fetching states and  sending signup payload)
+    └── auth.html (Dont touch it if you don't need to)
+```
+
+### AI Response
+To ensure the third-party SEPOMEX call applies exclusively to user signup and leaves map information intact, we add a dedicated sub-route /api/states/dropdown specifically for fetching state names:
+
+stateRoutes.js:
+```
+import express from 'express';
+
+const router = express.Router();
+
+/**
+ * GET /api/states/dropdown
+ * Fetches Mexican states exclusively from COPOMEX/SEPOMEX API for the registration dropdown.
+ * Does not touch local state health statistics or interactive map endpoints.
+ */
+router.get('/dropdown', async (req, res) => {
+    try {
+        const response = await fetch('https://api.copomex.com/query/get_estados?token=pruebas');
+        
+        if (!response.ok) {
+            throw new Error(`SEPOMEX API status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.error) {
+            return res.status(500).json({ success: false, error: 'SEPOMEX provider error' });
+        }
+
+        res.json(data.response);
+    } catch (error) {
+        console.error('Error fetching SEPOMEX states:', error.message);
+        res.status(500).json({ success: false, error: 'Could not load state list' });
+    }
+});
+
+/**
+ * GET /api/states/:id (or GET /api/states)
+ * Existing map and health stats endpoints remain untouched here.
+ */
+
+export default router;
+```
+
+This script calls the new /api/states/dropdown endpoint so your map queries remain separate:
+
+auth.js:
+```
+document.addEventListener('DOMContentLoaded', () => {
+    const signupForm = document.getElementById('signupForm');
+    const stateSelect = document.getElementById('state');
+    const alertMessage = document.getElementById('alertMessage');
+
+    // Load states strictly for account signup dropdown
+    loadStatesForSignup();
+
+    async function loadStatesForSignup() {
+        try {
+            const response = await fetch('/api/states/dropdown');
+            const states = await response.json();
+
+            if (!Array.isArray(states)) {
+                throw new Error('Invalid state array');
+            }
+
+            stateSelect.innerHTML = '<option value="" selected disabled>Select your state</option>';
+            states.forEach(stateName => {
+                const option = document.createElement('option');
+                option.value = stateName;
+                option.textContent = stateName;
+                stateSelect.appendChild(option);
+            });
+        } catch (error) {
+            console.error('Failed to load state list:', error);
+            stateSelect.innerHTML = '<option value="" selected disabled>Error loading states</option>';
+            showAlert('Could not load states from SEPOMEX API.', 'alert-warning');
+        }
+    }
+
+    signupForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+        const bloodType = document.getElementById('bloodType').value;
+        const state = document.getElementById('state').value;
+        const allergiesInput = document.getElementById('allergies').value;
+
+        const allergies = allergiesInput
+            ? allergiesInput.split(',').map(item => item.trim()).filter(Boolean)
+            : [];
+
+        const userData = {
+            name,
+            email,
+            password,
+            bloodType,
+            allergies,
+            location: { state }
+        };
+
+        try {
+            const response = await fetch('/api/auth/signup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(userData)
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+                showAlert('Account registered successfully!', 'alert-success');
+                if (data.token) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                }
+                signupForm.reset();
+            } else {
+                showAlert(data.error || 'Failed to register account.', 'alert-danger');
+            }
+        } catch (error) {
+            console.error('Registration error:', error);
+            showAlert('Server connection error. Please check your backend.', 'alert-danger');
+        }
+    });
+
+    function showAlert(message, type) {
+        alertMessage.className = `alert ${type}`;
+        alertMessage.textContent = message;
+        alertMessage.classList.remove('d-none');
+    }
+});
+```
+
+### Our modifications
+The API was not properly connecting. To ensure the user did not get stuck without being able to create an account, I added a fallback that would supply the states instead. After trying to run the server, the API did not work again but despite the fallback, the options would not load, and I couldn't create an account. To fix this, I a timeout in the /dropdown to prevent the application's user experience from hanging when an external service fails. And in auth.js I updated the script to handle the response format reliably and populate the select element instantly using the fallback of all 32 states. 
+
+stateRoutes.js:
+```
+//imports and documentation
+
+const MEXICAN_STATES_FALLBACK = [
+    "Aguascalientes", "Baja California", "Baja California Sur", "Campeche", "Chiapas",
+    "Chihuahua", "Coahuila", "Colima", "Ciudad de México", "Durango", "Guanajuato",
+    "Guerrero", "Hidalgo", "Jalisco", "Estado de México", "Michoacán", "Morelos",
+    "Nayarit", "Nuevo León", "Oaxaca", "Puebla", "Querétaro", "Quintana Roo",
+    "San Luis Potosí", "Sinaloa", "Sonora", "Tabasco", "Tamaulipas", "Tlaxcala",
+    "Veracruz", "Yucatán", "Zacatecas"
+];
+
+//documentation
+router.get('/dropdown', async (req, res) => {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 3000); // 3-second timeout
+
+    try {
+        const apiResponse = await fetch('https://api.copomex.com/query/get_estados?token=pruebas', {
+            signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+
+        if (!apiResponse.ok) {
+            throw new Error(`SEPOMEX status ${apiResponse.status}`);
+        }
+
+        const data = await apiResponse.json();
+
+        if (data.error || !Array.isArray(data.response)) {
+            throw new Error('Invalid response structure from SEPOMEX');
+        }
+
+        return res.status(200).json({ success: true, response: data.response });
+    } catch (error) {
+        clearTimeout(timeoutId);
+        console.warn('SEPOMEX API request failed or timed out. Serving fallback states list:', error.message);
+        
+        // Return 200 with fallback so frontend dropdown never hangs
+        return res.status(200).json({ success: true, response: MEXICAN_STATES_FALLBACK });
+    }
+});
+//rest of the code
+```
+
+auth.js:
+```
+//event listener
+const FALLBACK_STATES = [
+        "Aguascalientes", "Baja California", "Baja California Sur", "Campeche", "Chiapas",
+        "Chihuahua", "Coahuila", "Colima", "Ciudad de México", "Durango", "Guanajuato",
+        "Guerrero", "Hidalgo", "Jalisco", "Estado de México", "Michoacán", "Morelos",
+        "Nayarit", "Nuevo León", "Oaxaca", "Puebla", "Querétaro", "Quintana Roo",
+        "San Luis Potosí", "Sinaloa", "Sonora", "Tabasco", "Tamaulipas", "Tlaxcala",
+        "Veracruz", "Yucatán", "Zacatecas"
+];
+loadMexicanStates();
+
+    async function loadMexicanStates() {
+        try {
+            const response = await fetch('/api/states/dropdown');
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error ${response.status}`);
+            }
+
+            const data = await response.json();
+            const statesList = Array.isArray(data) ? data : (data.response || []);
+
+            if (statesList.length === 0) {
+                throw new Error('Empty state list received');
+            }
+
+            renderDropdown(statesList);
+        } catch (error) {
+            console.warn('Frontend state fetch error. Loading fallback options:', error.message);
+            renderDropdown(FALLBACK_STATES);
+        }
+    }
+//rest of the code
+```
+
+### New Prompt
+I made these changes (see above) but when I tried to create an account, it gave me this error:  Database error creating your account. Please try again later. What could be the cause of this and how can I fix it? 
+
+### AI Response
+That error means your frontend and route mapping are working properly, but MongoDB Atlas threw an error when trying to save the user document. This usually happens for one of three reasons in authRoutes.js / User Model:
+- Email duplicate key error (E11000 duplicate key error): An account with that email already exists in MongoDB, and the email field in your User schema has unique: true.
+- Schema validation error: Missing a required field in your User schema (for example, if bloodType or location.state are missing in the schema definition).
+- Password hashing failure: bcrypt failed if the password string was empty or undefined.
+Steps to Diagnose Immediately:
+- Check your Node terminal console: Try signing up again on auth.html and look at the terminal output where node server.js is running. It will log the exact error object from MongoDB.
+- Try a different email: If you previously registered using 0241852@up.edu.mx or another email, try registering with a fresh email address to verify if it was a duplicate key issue.
+
+### Our modifications and follow-up prompt
+To identifity what was wrong, I wanted to get exact details on what MongoDB is rejecting, so I updated authRoutes.js signup handler using console.error('MongoDB Signup Error Details:', error); to get the exact issue. After trying again, it gave me this error "next is not a function" and in the console: "SEPOMEX API request failed or timed out. Serving fallback states list: Invalid response structure from SEPOMEX MongoDB Signup Error Details: TypeError: next is not a function". After getting this, I sent another prompt asking the AI what the error meant exactly, especially involving Atlas.
+
+### AI Response
+The error stack trace points to your src/models/User.js file. In Mongoose, when you write an async pre-save hook (UserSchema.pre('save', async function(...) { ... })), Mongoose expects the middleware function NOT to accept next as a parameter (or to return a Promise without calling next()). If your pre-save hook looks like this:
+```
+// ❌ WRONG: Mixing async/await with next()
+UserSchema.pre('save', async function(next) {
+    // ...
+    next(); // Throws "TypeError: next is not a function" in modern Mongoose
+});
+```
+Mongoose passes no next callback to async functions because Promises handle the flow control automatically. Calling next() inside an async middleware hook crashes Mongoose with next is not a function. Furthermore, since you are already hashing the password in authRoutes.js, having password-hashing code inside your pre-save hook might be hashing your password twice or causing extra conflicts.
+
+### Our modifications
+To fix this, I removed the next parameter and the next calls and changed it to this: 
+```
+userSchema.methods.matchPassword = async function (enteredPassword) {
+    return await bcrypt.compare(enteredPassword, this.password);
+};
+```
+After these changes, the console gives me SEPOMEX API request failed or timed out. Serving fallback states list: Invalid response structure from SEPOMEX and it says on the page Server connection error. Please check your backend. I sent in another prompt asking what these errors meant and what I could do to fix them.
+
+### AI Response
+The error messages come from two different places:
+- Console Warning (SEPOMEX API request failed...): The external COPOMEX API ([https://api.copomex.com/](https://api.copomex.com/)...) returned an unexpected data structure or timed out. Your stateRoutes.js route caught it and sent back { success: true, response: [...] } containing the fallback array of 32 states.
+- Page Alert (Server connection error. Please check your backend.): The loadMexicanStates() function in auth.js failed to parse that response or threw an error inside its try block, which caused execution to jump to the catch block and trigger showAlert(...).
+If your frontend loadMexicanStates() tries to iterate directly over data instead of data.response, or fails on response properties, it throws a JS error in auth.js, triggering the red alert on screen.
+Ensure your renderDropdown helper correctly populates the select box without throwing errors and replace your loadMexicanStates function in public/js/auth.js with this safe version:
+```
+    try {
+        const response = await fetch('/api/states/dropdown');
+        
+        if (!response.ok) {
+            throw new Error(`Server status ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        // Safely extract state names array from response wrapper or raw array
+        let statesList = [];
+        if (Array.isArray(data)) {
+            statesList = data;
+        } else if (data && Array.isArray(data.response)) {
+            statesList = data.response;
+        } else if (data && Array.isArray(data.data)) {
+            statesList = data.data;
+        }
+
+        if (statesList.length === 0) {
+            throw new Error('No state records found in response');
+        }
+
+        renderDropdown(statesList);
+    } catch (error) {
+        console.warn('Could not load states from server endpoint, using client fallback:', error.message);
+        renderDropdown(FALLBACK_STATES);
+    }
+```
+
+### Our modifications
+Despite these changes, I still could not create an account. First, I added that when the account is created succesfuly, that the user is taken back to the index.html. I then used the insepct tool to identify the exact issues when trying to click on register account. When I checked the Mongo Atlas, I noticed the account was still not being created. If the document is not showing up in MongoDB Atlas, then it meant newUser.save() is failing or targeting a different database/collection than the one I wanted. After seeing the responses with the inspect tool, I gave it to the Ai to see if it would identifity what I wasn't seeing. 
+
+### AI Response 
+Your server log confirms that the backend did receive the payload. However, the browser is making a request to api/auth/signup (a relative path without a leading slash) instead of /api/auth/signup.   Because of the missing leading slash, your browser requests http://localhost:3000/api/auth/signup relative to the current directory, which Express fails to match to your router and instead serves your fallback 404 HTML page (<!DOCTYPE...). When JavaScript tries to run response.json(), it fails because HTML is not valid JSON.  Fix the Fetch Path in public/js/auth.js, Open public/js/auth.js and add a leading slash / to the fetch URL so it targets the root endpoint /api/auth/signup. 
+```
+// ❌ WRONG (relative path causing 404):
+// const response = await fetch('api/auth/signup', ...);
+
+// ✅ CORRECT (absolute route from server root):
+const response = await fetch('/api/auth/signup', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(userData)
+});
+```
+
+### Our modifications
+After correcting the small slash error in the subit listener, the account still wasn't being created. So, I added console.logs after each mayor step in the authRoutes.js so I could see each one being completed, or if it wasn't. 
+The console logs I added:
+```
+router.post('/signup', async (req, res) => {
+    try {
+        console.log("--> 1. Payload Received:", req.body);
+        const { name, email, password, bloodType, allergies, location } = req.body;
+
+        if (!name || !email || !password || !bloodType || !location?.state) {
+            return res.status(400).json({ 
+                success: false, 
+                error: 'Please fill out all required fields.' 
+            });
+        }
+
+        const existingUser = await User.findOne({ email: email.toLowerCase() });
+        console.log("--> 2. Existing user check completed. Found:", !!existingUser);
+
+        if (existingUser) {
+            return res.status(409).json({ 
+                success: false, 
+                error: 'An account with this email address already exists.' 
+            });
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        const newUser = new User({
+            name,
+            email: email.toLowerCase(),
+            password: hashedPassword,
+            bloodType,
+            allergies: allergies || [],
+            location: { state: location.state }
+        });
+
+        console.log("--> 3. Attempting to save user to Atlas...");
+        const savedUser = await newUser.save();
+        console.log("--> 4. SUCCESS! User saved with ID:", savedUser._id);
+
+        const token = jwt.sign(
+            { id: savedUser._id, email: savedUser.email }, 
+            JWT_SECRET, 
+            { expiresIn: '7d' }
+        );
+
+        return res.status(201).json({
+            success: true,
+            message: 'Account registered successfully!',
+            token,
+            user: {
+                id: savedUser._id,
+                name: savedUser.name,
+                email: savedUser.email,
+                bloodType: savedUser.bloodType,
+                allergies: savedUser.allergies,
+                location: savedUser.location
+            }
+        });
+
+    } catch (error) {
+        console.error("--> AT LAST STEP FAILED:", error);
+        return res.status(500).json({ 
+            success: false, 
+            error: error.message || 'Database error creating your account.' 
+        });
+    }
+});
+```
+It gave me this error at the console and I knew what was the problem not letting the account get created: --> AT LAST STEP FAILED: ReferenceError: User is not defined. I wasn't importing User.js into the authRoutes. After importing it at the top, the account created.
+```
+import express from 'express';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import User from '../models/User.js';
+//the rest of the code of authRoutes.js...
+```
 
 
 

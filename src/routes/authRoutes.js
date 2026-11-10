@@ -193,7 +193,7 @@ router.post('/update-bmi', async (req, res) => {
         ).select('-password');
 
         if (!updatedUser) {
-            return res.status(444).json({ success: false, error: 'User not found.' });
+            return res.status(404).json({ success: false, error: 'User not found.' });
         }
 
         return res.status(200).json({

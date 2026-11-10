@@ -53,7 +53,7 @@ app.use('/api/auth', authRoutes);
  * @param {express.Request} req - HTTP request object.
  * @param {express.Response} res - HTTP request object.
  */
-app.get('*path', (req, res) => {
+app.get('*', (req, res) => {
     if (req.path.startsWith('/api/')) {
         return res.status(404).json({ success: false, error: 'API route not found' });
     }

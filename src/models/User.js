@@ -54,6 +54,26 @@ const userSchema = new mongoose.Schema({
             type: String,
             required: [true, 'State location is required']
         }
+    },
+    height: {
+        type: Number,
+        default: null,
+        min: [50, 'Height must be at least 50 cm'],
+        max: [250, 'Height must be realistic (max 250 cm)']
+    },
+    weight: {
+        type: Number,
+        default: null,
+        min: [20, 'Weight must be at least 20 kg'],
+        max: [300, 'Weight must be realistic (max 300 kg)']
+    },
+    bmi: {
+        type: Number,
+        default: null
+    },
+    bmiCategory: {
+        type: String,
+        default: 'Not calculated'
     }
 }, {
     timestamps: true

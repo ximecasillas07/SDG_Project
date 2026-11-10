@@ -64,7 +64,11 @@ router.post('/signup', async (req, res) => {
                 email: savedUser.email,
                 bloodType: savedUser.bloodType,
                 allergies: savedUser.allergies,
-                location: savedUser.location
+                location: savedUser.location,
+                height: savedUser.height,
+                weight: savedUser.weight,
+                bmi: savedUser.bmi,
+                bmiCategory: savedUser.bmiCategory
             }
         });
 
@@ -73,6 +77,147 @@ router.post('/signup', async (req, res) => {
         return res.status(500).json({ 
             success: false, 
             error: error.message || 'Database error creating your account.' 
+        });
+    }
+});
+
+/**
+ * Express route for user login.
+ * 
+ * @name POST/api/auth/login
+ * @function
+ * @param {express.Request} req - Express request object containing email and password.
+ * @param {express.Response} res - Express response object.
+ */
+router.post('/login', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            return res.status(400).json({ 
+                success: false, 
+                error: 'Please provide both email and password.' 
+            });
+        }
+
+        //find user by email
+        const user = await User.findOne({ email: email.toLowerCase() });
+        if (!user) {
+            return res.status(401).json({ 
+                success: false, 
+                error: 'Invalid email or password.' 
+            });
+        }
+
+        //compare password using Mongoose schema method
+        const isMatch = await user.matchPassword(password);
+        if (!isMatch) {
+            return res.status(401).json({ 
+                success: false, 
+                error: 'Invalid email or password.' 
+            });
+        }
+
+        //generate JWT Token
+        const token = jwt.sign(
+            { id: user._id, email: user.email }, 
+            JWT_SECRET, 
+            { expiresIn: '7d' }
+        );
+
+        return res.status(200).json({
+            success: true,
+            message: 'Logged in successfully!',
+            token,
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                bloodType: user.bloodType,
+                allergies: user.allergies,
+                location: user.location,
+                height: user.height,
+                weight: user.weight,
+                bmi: user.bmi,
+                bmiCategory: user.bmiCategory
+            }
+        });
+
+    } catch (error) {
+        console.error('Error during login:', error);
+        return res.status(500).json({ 
+            success: false, 
+            error: error.message || 'Server error during login.' 
+        });
+    }
+});
+
+
+/**
+ * Express route to calculate and persist a user's BMI.
+ * 
+ * @name POST/api/auth/update-bmi
+ * @function
+ * @param {express.Request} req - Express request object containing userId, heightCm, and weightKg.
+ * @param {express.Response} res - Express response object.
+ */
+router.post('/update-bmi', async (req, res) => {
+    try {
+        const { userId, heightCm, weightKg } = req.body;
+
+        if (!userId || !heightCm || !weightKg || heightCm < 50 || weightKg < 20) {
+            return res.status(400).json({ 
+                success: false, 
+                error: 'Please provide valid height (cm) and weight (kg).' 
+            });
+        }
+
+        const heightMeters = heightCm / 100;
+        const bmiValue = parseFloat((weightKg / (heightMeters * heightMeters)).toFixed(1));
+
+        let category = '';
+        if (bmiValue < 18.5) category = 'Underweight';
+        else if (bmiValue < 24.9) category = 'Normal weight';
+        else if (bmiValue < 29.9) category = 'Overweight';
+        else category = 'Obesity';
+
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { 
+                height: heightCm, 
+                weight: weightKg, 
+                bmi: bmiValue, 
+                bmiCategory: category 
+            },
+            { new: true, runValidators: true }
+        ).select('-password');
+
+        if (!updatedUser) {
+            return res.status(444).json({ success: false, error: 'User not found.' });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: 'BMI updated successfully!',
+            user: {
+                id: updatedUser._id,
+                name: updatedUser.name,
+                email: updatedUser.email,
+                bloodType: updatedUser.bloodType,
+                allergies: updatedUser.allergies,
+                location: updatedUser.location,
+                height: updatedUser.height,
+                weight: updatedUser.weight,
+                bmi: updatedUser.bmi,
+                bmiCategory: updatedUser.bmiCategory
+            }
+        });
+
+    } catch (error) {
+        console.error('Error updating BMI:', error);
+        return res.status(500).json({ 
+            success: false, 
+            error: error.message || 'Server error updating BMI.' 
         });
     }
 });

@@ -53,67 +53,108 @@
         </div>
     </nav>
 
-    <!-- Main Registration Container -->
-    <div class="container my-5">
-        <div class="row justify-content-center">
+    <!-- Main Authentication Container -->
+    <div class="container my-5 flex-grow-1 d-flex align-items-center justify-content-center">
+        <div class="row justify-content-center w-100">
             <div class="col-md-8 col-lg-6">
-                <div class="card auth-card p-4 bg-white">
-                    <h2 class="text-center fw-bold mb-4 auth-header">Create Your Account</h2>
+                <div class="card auth-card p-4 bg-white shadow-sm">
                     
                     <div id="alertMessage" class="alert d-none" role="alert"></div>
 
-                    <form id="signupForm" novalidate>
-                        <!-- Full Name -->
-                        <div class="mb-3">
-                            <label for="name" class="form-label fw-bold">Full Name</label>
-                            <input type="text" class="form-control" id="name" required placeholder="e.g. Valeria Gómez">
-                        </div>
+                    <!-- Sign In (DEFAULT) -->
+                    <div id="loginSection">
+                        <h2 class="text-center fw-bold mb-4 auth-header">Sign In to Your Account</h2>
 
-                        <!-- Email Address -->
-                        <div class="mb-3">
-                            <label for="email" class="form-label fw-bold">Email Address</label>
-                            <input type="email" class="form-control" id="email" required placeholder="e.g. 0241852@up.edu.mx or user@gmail.com">
-                        </div>
-
-                        <!-- Password -->
-                        <div class="mb-3">
-                            <label for="password" class="form-label fw-bold">Password</label>
-                            <input type="password" class="form-control" id="password" minlength="6" required placeholder="At least 6 characters">
-                        </div>
-
-                        <!-- Blood Type & SEPOMEX Dynamic State Select -->
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="bloodType" class="form-label fw-bold">Blood Type</label>
-                                <select class="form-select" id="bloodType" required>
-                                    <option value="" selected disabled>Select Type</option>
-                                    <option value="A+">A+</option>
-                                    <option value="A-">A-</option>
-                                    <option value="B+">B+</option>
-                                    <option value="B-">B-</option>
-                                    <option value="AB+">AB+</option>
-                                    <option value="AB-">AB-</option>
-                                    <option value="O+">O+</option>
-                                    <option value="O-">O-</option>
-                                </select>
+                        <form id="loginForm" novalidate>
+                            <!-- Email Address -->
+                            <div class="mb-3">
+                                <label for="loginEmail" class="form-label fw-bold">Email Address</label>
+                                <input type="email" class="form-control" id="loginEmail" required placeholder="e.g. user@gmail.com">
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="state" class="form-label fw-bold">State</label>
-                                <select class="form-select" id="state" required>
-                                    <option value="" selected disabled>Loading states...</option>
-                                </select>
+
+                            <!-- Password -->
+                            <div class="mb-3">
+                                <label for="loginPassword" class="form-label fw-bold">Password</label>
+                                <input type="password" class="form-control" id="loginPassword" required placeholder="Enter your password">
                             </div>
-                        </div>
 
-                        <!-- Allergies -->
-                        <div class="mb-3">
-                            <label for="allergies" class="form-label fw-bold">Allergies <span class="text-muted fs-7">(optional, comma-separated)</span></label>
-                            <input type="text" class="form-control" id="allergies" placeholder="e.g. Penicillin, Peanuts">
-                        </div>
+                            <!-- Submit Button -->
+                            <button type="submit" class="btn btn-custom-green w-100 py-2 fw-bold mt-2">Sign In</button>
+                        </form>
 
-                        <!-- Submit Button -->
-                        <button type="submit" class="btn btn-custom-green w-100 py-2 fw-bold">Register Account</button>
-                    </form>
+                        <div class="text-center mt-4 pt-3 border-top">
+                            <p class="mb-0 text-muted">Don't have an account?</p>
+                            <button id="showSignupBtn" class="btn btn-link text-decoration-none fw-bold p-0 text-success">
+                                Create one here!
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Sign up (HIDDEN BY DEFAULT) -->
+                    <div id="signupSection" class="d-none">
+                        <h2 class="text-center fw-bold mb-4 auth-header">Create Your Account</h2>
+
+                        <form id="signupForm" novalidate>
+                            <!-- Full Name -->
+                            <div class="mb-3">
+                                <label for="name" class="form-label fw-bold">Full Name</label>
+                                <input type="text" class="form-control" id="name" required placeholder="e.g. Valeria Gómez">
+                            </div>
+
+                            <!-- Email Address -->
+                            <div class="mb-3">
+                                <label for="email" class="form-label fw-bold">Email Address</label>
+                                <input type="email" class="form-control" id="email" required placeholder="e.g. 0241852@up.edu.mx or user@gmail.com">
+                            </div>
+
+                            <!-- Password -->
+                            <div class="mb-3">
+                                <label for="password" class="form-label fw-bold">Password</label>
+                                <input type="password" class="form-control" id="password" minlength="6" required placeholder="At least 6 characters">
+                            </div>
+
+                            <!-- Blood Type & SEPOMEX Dynamic State Select -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="bloodType" class="form-label fw-bold">Blood Type</label>
+                                    <select class="form-select" id="bloodType" required>
+                                        <option value="" selected disabled>Select Type</option>
+                                        <option value="A+">A+</option>
+                                        <option value="A-">A-</option>
+                                        <option value="B+">B+</option>
+                                        <option value="B-">B-</option>
+                                        <option value="AB+">AB+</option>
+                                        <option value="AB-">AB-</option>
+                                        <option value="O+">O+</option>
+                                        <option value="O-">O-</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="state" class="form-label fw-bold">State</label>
+                                    <select class="form-select" id="state" required>
+                                        <option value="" selected disabled>Loading states...</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Allergies -->
+                            <div class="mb-3">
+                                <label for="allergies" class="form-label fw-bold">Allergies <span class="text-muted fs-7">(optional, comma-separated)</span></label>
+                                <input type="text" class="form-control" id="allergies" placeholder="e.g. Penicillin, Peanuts">
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit" class="btn btn-custom-green w-100 py-2 fw-bold">Register Account</button>
+                        </form>
+
+                        <div class="text-center mt-4 pt-3 border-top">
+                            <p class="mb-0 text-muted">Already have an account?</p>
+                            <button id="showLoginBtn" class="btn btn-link text-decoration-none fw-bold p-0 text-success">
+                                Sign in here!
+                            </button>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

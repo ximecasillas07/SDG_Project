@@ -36,7 +36,8 @@ router.get('/dropdown', async (req, res) => {
     const timeoutId = setTimeout(() => controller.abort(), 3000);
 
     try {
-        const apiResponse = await fetch('https://api.copomex.com/query/get_estados?token=20a8c359-6195-4e44-a053-8709b14979ef', {
+        //20a8c359-6195-4e44-a053-8709b14979ef
+        const apiResponse = await fetch('https://api.copomex.com/query/get_estados?token=pruebas', {
             headers: { 'Accept': 'application/json' },
             signal: controller.signal
         });

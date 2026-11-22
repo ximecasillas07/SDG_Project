@@ -1,0 +1,11 @@
+/* Custom styles for the About & Contact page */
+
+/* Smooth card scale on hover */
+#contact .card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+#contact .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.08) !important;
+}

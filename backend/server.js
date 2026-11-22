@@ -37,7 +37,7 @@ app.use(express.json());
 /** Parses URL-encoded data from traditional forms */
 app.use(express.urlencoded({ extended: true }));
 /** Static file server for the user interface (HTML, CSS, JS, images) */
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '..', 'frontend', 'dist')));
 
 /** Endpoints for consulting health for the 32 states */
 app.use('/api/states', statesRoutes);
@@ -53,13 +53,14 @@ app.use('/api/auth', authRoutes);
  * @param {express.Request} req - HTTP request object.
  * @param {express.Response} res - HTTP request object.
  */
-app.get('*', (req, res) => {
+app.get('{/*path}', (req, res) => {
     if (req.path.startsWith('/api/')) {
         return res.status(404).json({ success: false, error: 'API route not found' });
     }
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, '..', 'frontend', 'dist', 'index.html'));
 });
 
-app.listen(3000, () => {
-  console.log('Server is running on http://localhost:3000')
-});
+const PORT = process.env.PORT || 3000;
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`Server is running on port ${PORT}`);
+    });

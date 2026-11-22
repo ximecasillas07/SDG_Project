@@ -1,0 +1,28 @@
+body {
+    background-color: #f4f7f6;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.bg-custom-green {
+    background-color: #1E592F !important;
+}
+
+.btn-custom-green {
+    background-color: #1E592F;
+    color: #ffffff;
+    border: none;
+}
+
+.btn-custom-green:hover {
+    background-color: #143D20;
+    color: #ffffff;
+}
+
+.auth-card {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.auth-header {
+    color: #1E592F;
+}

@@ -333,6 +333,99 @@
 
 ---
 
+## Session 11 Log Entry
 
+### Session Overview
+* **Date:** 09/11/26
+* **Module/Feature Scope:** Third-party API fix, My Profile page implementation
+* **Est. Time Invested:** 4.0 hours
+* **Active Developers:** Valeria Arias and Alejandra Eguiarte
+
+### Session Goals
+- [x] Goal 1: Implement My Profile Page
+- [x] Goal 2: Fix the API connection
+
+### Tasks Completed
+* [x] **My Profile:** Made it so after creating an account, you gain access to a profile page that allowed you to see your information. From this page you can see any information you used during the creation of your account, and we connected the height and weight you input in the calculator so it would show up in your profile, along with your BMI if calculated.
+* [x] **SEPOMEX API:** Registered for an official COPOMEX/SEPOMEX API account to replace the placeholder `pruebas` token with a valid API key. Cleaned up duplicate state-fetching logic between `stateRoutes.js` and `authRoutes.js` so all third-party state requests are handled centrally in `stateRoutes.js`.
+
+### Challenges Faced
+**Roadblock:**
+  * *Challenge:* At first, when you calculated the BMI, the stats would not show up in the profile page.
+  * *Solution:* In calculator.js, we updated the event listener where you submit the BMI form. We changed it so once post (`/api/calculator/bmi`) returns a successful result, it checks if the user is logged in and sends a request to /api/auth/update-bmi to save the new metrics to MongoDB and update localStorage.
+
+### Documentation & Reference Links
+* External Postal API - [SEPOMEX API](http://icalialabs.github.io/sepomex/)
+
+### Next Horizon Actions
+1. Switch to React
+
+---
+
+## Session 12 Log Entry
+
+### Session Overview
+- **Date:** 11/11/26
+- **Module/Feature Scope:** React Migration Setup & Core Architecture
+- **Est. Time Invested:** 4.0 hours
+- **Active Developers:** Ximena Casillas
+
+### Session Goals
+- [x] Goal: Begin migration to React
+
+### Tasks Completed
+* [x] **Research into Vite:** Researched Vite configuration with React, setting up `vite.config.js` to run the development server on port 5173 and proxy `/api` requests to the Express backend on port 3000.
+* [x] **Began the migration:** Initialized a new React + Vite application. Migrated static CSS stylesheets and `states.json` assets. Built the global `AuthContext` provider for session/token persistence, created reusable `Navbar` and `Footer` components, and migrated the initial `Home.jsx` and `About.jsx` views along with the base `App.jsx` router.
+
+### Challenges Faced
+**Roadblock:**
+ * *Challenge:* Legacy codebase inconsistencies—including an invalid HTTP status code (`444` instead of `404`) in `authRoutes.js`, a deprecated monolithic script (`script.js`) vs. the active `calculator.js`, and a charset typo (`uft-8`) in `resources.html` needed to be resolved before migrating components cleanly.
+ * *Solution:* Audited the base repository first, corrected the status code to `404`, fixed the HTML meta tag, and verified that `calculator.js` was the active script handling MongoDB/localStorage synchronization before translating views into React components.
+
+### Documentation & Reference Links
+- Vite getting started - [Vite documentation](https://vite.dev/guide/)
+
+### Next Horizon Actions
+1. Finish migrating remaining pages to React
+2. Restructure repository into dedicated `backend/` and `frontend/` folders and unify server execution.
+
+---
+
+## Session 13 Log Entry
+
+### Session Overview
+- **Date:** 12/11/26 - 14/11/26
+- **Module/Feature Scope:** Full React Migration, Monorepo Restructuring (`backend/` & `frontend/`), Concurrent Server Execution
+- **Est. Time Invested:** 6.0 hours total (~2.0 hrs/day)
+- **Active Developers:** Ximena Casillas
+
+### Session Goals
+- [x] Goal 1: Migrate all remaining pages and interactive features to 100% React
+- [x] Goal 2: Reorganize the project into cleanly separated `backend/` and `frontend/` directories
+- [x] Goal 3: Configure simultaneous backend and frontend execution to resolve API connection failures
+
+### Tasks Completed
+* [x] **100% Frontend Migration to React:** Completed migration of all remaining views and components inside `frontend/src/`, including `Resources.jsx`, `Calculator.jsx` (with WHO BMI spectrum pointer animation and MongoDB profile sync), `Auth.jsx` (Sign In / Sign Up toggle with dynamic state dropdown), `Profile.jsx` protected by `ProtectedRoute.jsx`, and `Mexico.jsx` (interactive 32-state SVG map).
+* [x] **Backend & Frontend Folder Separation:** Reorganized the repository structure into dedicated `backend/` (`server.js` and `src/` containing `config/`, `data/`, `models/`, `routes/`) and `frontend/` (`public/`, `src/` with `assets/`, `components/`, `context/`, `pages/`, `styles/`, and `vite.config.js`) folders.
+* [x] **Unified & Concurrent Execution:** Installed `concurrently` in the root `package.json` and created the `npm run dev` script to launch both the Express backend and Vite dev server simultaneously from a single terminal, alongside `npm run build` and `npm start` for unified production deployment. Documented the workflow in `HOW_TO_RUN.md`.
+
+### Challenges Faced
+**Roadblock 1 (API & SVG Map Connection Failures):**
+* *Challenge:* Running only the Vite server caused `/api` requests  to fail, while a redundant `/states.json` proxy rule in `vite.config.js` caused 502 errors even though `states.json` was already stored locally.
+* *Solution:* Removed the `/states.json` proxy rule from `vite.config.js` so Vite serves static assets directly, and configured `concurrently --kill-others-on-fail` in `package.json` so running `npm run dev` automatically boots both Express (`localhost:3000`) and Vite (`localhost:5173`) together.
+
+**Roadblock 2 (Express 5 Catch-All Routing & Production Serving):**
+* *Challenge:* Updating `backend/server.js` to serve the compiled React bundle (`frontend/dist`) triggered an Express 5 `PathError` when using the legacy `*` wildcard route (`app.get('*', ...)`), and MongoDB connection failures in `db.js` terminated the server.
+* *Solution:* Updated the Express 5 catch-all route to `app.get('{/*path}', ...)` so non-API routes serve `frontend/dist/index.html`, adjusted path resolution to point to `../frontend/dist`, and commented out `process.exit(1)` in `db.js` to allow graceful fallback handling.
+
+### Documentation & Reference Links
+- React Router Documentation - [React Router](https://reactrouter.com/)
+- Concurrently Package - [Concurrently npm](https://www.npmjs.com/package/concurrently)
+- Local Execution Guide - `HOW_TO_RUN.md`
+
+### Next Horizon Actions
+1. Finish adding the remaining features for the final.
+
+---
 
 

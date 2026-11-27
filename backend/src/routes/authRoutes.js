@@ -15,6 +15,37 @@ import { stateResources, defaultStateResource } from '../data/stateResources.js'
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || 'sdg3_mexico_health_secret_key';
 
+/**
+- Middleware to verify JWT Bearer token on protected auth routes.
+- 
+- @function verifyToken
+- @param {express.Request} req - Express request object.
+- @param {express.Response} res - Express response object.
+- @param {express.NextFunction} next - Express next middleware function.
+ */
+
+const verifyToken = (req, res, next) => {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({
+            success: false,
+            error: 'Access denied. No authentication token provided.'
+        });
+    }
+
+    const token = authHeader.split(' ')[1];
+    try {
+        const decoded = jwt.verify(token, JWT_SECRET);
+        req.user = decoded;
+        next();
+    } catch (error) {
+        return res.status(401).json({
+            success: false,
+            error: 'Invalid or expired session token. Please log in again.'
+        });
+    }
+};
+
 router.post('/signup', async (req, res) => {
     try {
         const { name, email, password, bloodType, allergies, location } = req.body;
@@ -152,6 +183,77 @@ router.post('/login', async (req, res) => {
     }
 });
 
+/**
+- Express route to update an authenticated user's profile details.
+- 
+- @name PUT/api/auth/profile
+- @function
+- @param {express.Request} req - Express request object containing updated name, bloodType, allergies, and location.
+- @param {express.Response} res - Express response object.
+ */
+router.put('/profile', verifyToken, async (req, res) => {
+    try {
+        const { name, bloodType, allergies, location } = req.body;
+
+        if (!name || !bloodType || !location?.state) {
+            return res.status(400).json({
+                success: false,
+                error: 'Name, blood type, and state location are required.'
+            });
+        }
+
+        //normalize allergies array (accepts array or comma-separated string)
+        let formattedAllergies = [];
+        if (Array.isArray(allergies)) {
+            formattedAllergies = allergies.map(item => item.trim()).filter(Boolean);
+        } else if (typeof allergies === 'string' && allergies.trim() !== '') {
+            formattedAllergies = allergies.split(',').map(item => item.trim()).filter(Boolean);
+        }
+
+        const updatedUser = await User.findByIdAndUpdate(
+            req.user.id,
+            {
+                name: name.trim(),
+                bloodType,
+                allergies: formattedAllergies,
+                location: { state: location.state }
+            },
+            { new: true, runValidators: true }
+        ).select('-password');
+
+        if (!updatedUser) {
+            return res.status(404).json({
+                success: false,
+                error: 'User account not found.'
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: 'Profile updated successfully!',
+            user: {
+                id: updatedUser._id,
+                name: updatedUser.name,
+                email: updatedUser.email,
+                bloodType: updatedUser.bloodType,
+                allergies: updatedUser.allergies,
+                location: updatedUser.location,
+                height: updatedUser.height,
+                weight: updatedUser.weight,
+                bmi: updatedUser.bmi,
+                bmiCategory: updatedUser.bmiCategory
+            }
+        });
+
+    } catch (error) {
+        console.error('Error updating user profile:', error);
+        const statusCode = error.name === 'ValidationError' ? 400 : 500;
+        return res.status(statusCode).json({
+            success: false,
+            error: error.message || 'Server error updating profile.'
+        });
+    }
+});
 
 /**
  * Express route to calculate and persist a user's BMI.
